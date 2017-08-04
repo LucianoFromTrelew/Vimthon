@@ -1,8 +1,6 @@
 from django import forms
 
-class RegexForm(forms.ModelForm):
+class RegexForm(forms.Form):
 
-	regex_validator = RegexValidator(regex= r'')
-	text = TextField(required=True)
-	regex = TextField(required=True, validators=[
-		RegexValidator('^:\/s\/\w+\/\w+\/g', )])
+    text = forms.CharField(widget=forms.Textarea, required=True)
+    regex = forms.CharField(required=True) 
