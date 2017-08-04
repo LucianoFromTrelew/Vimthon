@@ -5,7 +5,8 @@ class RegexForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea, required=True)
     regex = forms.CharField(required=True)
 
-    """r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g', ':1,2s/foo//g'
+    """
+        r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g'
 
 	esa expresion regular matchea bien con el %, con dos numeros separados por coma, o con nada (antes de la 's')
 	matchea con la palabra a buscar
