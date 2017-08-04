@@ -2,17 +2,30 @@
 
 {% block content %}
 
+
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $('#id_regex').css("background-color", "red");
+    });
+});
+</script>
+
+
+
 <form method="POST" class="post-form">{% csrf_token %}
   {{ form.as_p  }}
 </form>
 
 
+<button type="button" onclick="myFunction()">Try it</button>
 
-<form action="" id="">
-    Name: <input type="text" name="username">
-    <input type="submit">
-
-</form>
-
-<textarea id="" name="algo" cols="30" rows="10"></textarea>
 {% endblock %}
+
+<!--
+<script>
+function myFunction() {
+	$('#id_regex').css("background-color", "yellow");
+}
+</script>
+-->
