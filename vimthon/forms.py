@@ -1,11 +1,18 @@
 from django import forms
-
+from django.core.validators import RegexValidator
+import re
 class RegexForm(forms.Form):
+	
+	regex = re.compile(r':(%|\d+,\d+)?s/(.+)/(.*)/g$', re.X)
+	text = forms.CharField(widget=forms.Textarea)
+	regex = forms.CharField(required=True,
+		validators=[
+		RegexValidator(
+			regex=regex,
+			message='Wrong format')])
 
-    text = forms.CharField(widget=forms.Textarea, required=True)
-    regex = forms.CharField(required=True)
 
-    """
+"""
         r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g'
 
 	esa expresion regular matchea bien con el %, con dos numeros separados por coma, o con nada (antes de la 's')
@@ -20,5 +27,5 @@ class RegexForm(forms.Form):
 	:%s/foo/bar/g
 
 	que el 'foo', pueda ser una expresion regular. Asi como esta ahora la exp, solo busca palabras
+"""
 	
-    """

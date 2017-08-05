@@ -14,11 +14,10 @@ $(document).ready(function(){
 
 
 <form method="POST" class="post-form">{% csrf_token %}
-  {{ form.as_p  }}
+  	{{ form }}
+	<button type="submit" class="save btn btn-default" onclick="myFunction">Save</button>
 </form>
 
-
-<button type="button" onclick="myFunction()">Botoncito</button>
 
 {% endblock %}
 
@@ -28,4 +27,5 @@ function myFunction() {
 	$('#id_regex').css("background-color", "yellow");
 }
 </script>
+<button type="button" onclick="myFunction()">Botoncito</button>
 -->
