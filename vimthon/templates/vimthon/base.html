@@ -16,12 +16,23 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="{% static 'js/script.js' %}"></script>
 
+        <!-- boton para github -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
     </head>
 
     <body>
         <div class="page-header">
             <h1 align="center"><a href="/">Vimthon</a></h1>
+
+            <a href="https://github.com/LucianoFromTrelew/Vimthon" target="_blank">
+                <img src="{% static "images/github.png" %}" alt="Vimthon on GitHub" style="width:42px;height:42px;"/>
+            </a>
+
+            <a href="https://hub.docker.com/r/lucianofromtrelew/vimthon/" target="_blank">
+                <img src="{% static "images/docker.png" %}" alt="Vimthon on DockerHub" style="width:42px;height:42px;"/>
+            </a>
         </div>
+        <!-- Place this tag where you want the button to render. -->
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
