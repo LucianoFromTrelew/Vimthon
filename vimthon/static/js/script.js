@@ -19,10 +19,7 @@ $(document).ready(function(){
 
 
 function cursor(){
-    var pip = $('#id_text').val().substr($('#id_text')[0].electionEnd, $('#id_text')[0].selectionStart).split('\n').length;
-
     var start = $('#id_text')[0].selectionStart;
     var end = $('#id_text')[0].selectionEnd;
-
     return (start==end) ? start : -1;
 }
