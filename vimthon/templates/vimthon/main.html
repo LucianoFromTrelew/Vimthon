@@ -3,23 +3,15 @@
 {% block content %}
 
 
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $('#id_regex').css("background-color", "red");
-    });
-});
-</script>
-
-
-
 <form method="POST" class="post-form">{% csrf_token %}
   	{{ form }}
-	<button type="submit" class="save btn btn-default" onclick="myFunction">Save</button>
+	<button type="submit" class="save btn btn-default">Send</button>
 </form>
 
 
 {% endblock %}
+
+
 
 <!--
 <script>
@@ -28,4 +20,13 @@ function myFunction() {
 }
 </script>
 <button type="button" onclick="myFunction()">Botoncito</button>
+
+
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $('#id_regex').css("background-color", "red");
+    });
+});
+</script>
 -->
