@@ -6,15 +6,14 @@ from . import forms
 import re
 import lorem 
 
-
 cursor = -1
 
 def main(request):
-    print('El cursor está en {}'.format(cursor))
     if request.method == 'POST' :
         form = forms.RegexForm(request.POST)
         if form.is_valid():
                 text = form.cleaned_data['text']
+                print(text, 'El cursor está en {}'.format(linea_columna(text, cursor)))
                 regex = form.cleaned_data['regex']
                 match = re.search(r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g$', regex)
                 search = re.compile(match.group(2))
@@ -34,7 +33,7 @@ def main(request):
 @csrf_exempt
 def set_cursor(request):
     global cursor 
-    cursor = request.GET.get('cursor', None)
+    cursor = int(request.GET.get('cursor', None))
     
     if cursor is not None:
         print('ahi va')
@@ -43,5 +42,13 @@ def set_cursor(request):
     else:
         return HttpResponse('ni ahi')
 
+def linea_columna(cadena, pos):
+    linea = 0
+    todo = [c for i in cadena.split('\r') for c in i.split('\n')]
+    col = pos
+    while (col - (len(todo[linea]))) > 0:
+        col = col-(len(todo[linea])+1)
+        linea+=1
+    return (linea,col+1)
 # Create your views here.
 
