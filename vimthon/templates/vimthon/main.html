@@ -3,9 +3,9 @@
 {% block content %}
 
 
-<form method="POST" class="post-form">{% csrf_token %}
+<form method="POST" id="text_form" class="post-form">{% csrf_token %}
   	{{ form }}
-	<button type="submit" class="save btn btn-default">Send</button>
+	<button id="submitBtn" type="submit" class="save btn btn-default">Send</button>
 </form>
 
 
