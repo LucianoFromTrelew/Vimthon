@@ -1,9 +1,13 @@
 from django import forms
 from django.core.validators import RegexValidator
 import re
+
+REGEX = ':(%|\d+,\d+)?s/(.+)/(.*)/g$'
+RE_PER = '%'
+RE_RNG = '\d+,\d+'
 class RegexForm(forms.Form):
 	
-	regex = re.compile(r':(%|\d+,\d+)?s/(.+)/(.*)/g$', re.X)
+	regex = re.compile(REGEX, re.X)
 	text = forms.CharField(widget=forms.Textarea)
 	regex = forms.CharField(required=True,
 		validators=[
@@ -12,7 +16,18 @@ class RegexForm(forms.Form):
 			message='Wrong format')])
 
 
-"""
+	def reemplazar(self, texto, matches, cursor):
+		if(re.search(RE_PER, matches.group(1))):
+			#reemplazo en todo el texto
+			return re.sub(matches.group(2), matches.group(3), texto)
+		elif(re.search(RE_RNG, matches.group(1))):
+			#reemplazo en rango
+			pass
+		else:
+			#reemplazo en linea
+			pass
+
+"""			
         r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g'
 
 	esa expresion regular matchea bien con el %, con dos numeros separados por coma, o con nada (antes de la 's')
