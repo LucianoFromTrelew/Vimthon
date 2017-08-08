@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
-from . import forms
+from . import forms, utils
 import re
 import lorem 
 
@@ -13,10 +13,9 @@ def main(request):
         if form.is_valid():
                 text = form.cleaned_data['text']
                 regex = form.cleaned_data['regex']
-                print(text, 'El cursor está en {}'.format(linea_columna(text, cursor)))
-                match = re.search(forms.REGEX, regex)
+                match = re.search(utils.REGEX, regex)
                 form = forms.RegexForm()
-                text = form.reemplazar(text, match, cursor)
+                text = utils.reemplazar(text, match, cursor)
                 # search = re.compile(match.group(2))
                 # text = re.sub(search, match.group(3), text)
                 form.fields['text'].initial=text
@@ -39,13 +38,6 @@ def set_cursor(request):
     else:
         return HttpResponse('ni ahi')
 
-def linea_columna(cadena, pos):
-    linea = 0
-    todo = [c for i in cadena.split('\r') for c in i.split('\n')]
-    col = pos
-    while (col - (len(todo[linea]))) > 0:
-        col = col-(len(todo[linea])+1)
-        linea+=1
-    return (linea,col+1)
+
 # Create your views here.
 
