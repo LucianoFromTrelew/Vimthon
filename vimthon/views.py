@@ -27,7 +27,7 @@ def main(request):
 
     else:
         form = forms.RegexForm()
-        #form.fields['text'].initial = lorem.paragraph
+        form.fields['text'].initial = lorem.paragraph
         return render(request, 'vimthon/main.html', {'form':form})
 
 @csrf_exempt
