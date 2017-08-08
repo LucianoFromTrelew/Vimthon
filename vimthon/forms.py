@@ -25,7 +25,12 @@ class RegexForm(forms.Form):
 			pass
 		else:
 			#reemplazo en linea
-			pass
+			lineas = [c for i in texto.split('\r') for c in i.split('\n')]
+			print(cursor)
+			print(lineas)
+			# = re.sub(matches.group(2), matches.group(3), lineas[cursor])
+			return texto
+			
 
 """			
         r':(%|\d+,\d+)?s/(\w+)?/(\w+)?/g'
