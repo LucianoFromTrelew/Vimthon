@@ -1,16 +1,21 @@
 import re
 
-REGEX = ':(%|\d+,\d+)?s/(.+)/(.*)/g$'
+REGEX = ':(%|\d+,\d+)?s/(.+)/(.*)/g(i)?$'
 RE_PER = '%'
 RE_RNG = '\d+,\d+'
 
 
 def reemplazar(texto, matches, cursor):
+    if(matches.group(4) == None):
+        flags = 0
+    else:
+        flags = re.IGNORECASE
+    
     try:
         if(re.search(RE_PER, matches.group(1))):
             #reemplazo en todo el texto
             print("reemplazar todo")
-            return re.sub(matches.group(2), matches.group(3), texto)
+            return re.sub(matches.group(2), matches.group(3), texto, flags)
         #else:
         elif(re.search(RE_RNG, matches.group(1))):
             print("reemplazo en rango")
@@ -34,11 +39,8 @@ def reemplazar(texto, matches, cursor):
         print("reemplazo linea")
         cursor_actual = linea_columna(texto, cursor)[0]
         lineas = splitear_lineas(texto)
-        lineas[cursor_actual] = re.sub(matches.group(2), matches.group(3), lineas[cursor_actual])
-        # print(lineas)
+        lineas[cursor_actual] = re.sub(matches.group(2), matches.group(3), lineas[cursor_actual], flags)
         return "\n".join(lineas)
-        # = re.sub(matches.group(2), matches.group(3), lineas[cursor])
-        # return texto
 
 def linea_columna(cadena, pos):
     linea = 0
