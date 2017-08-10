@@ -1,20 +1,20 @@
-{% load staticfiles %}
-
-<!-- le pedimos a Django que cargue los archivos estaticos que se encuentran en la carpeta static/ en la carpeta de la aplicacion-->
 
 <html>
     <head>
         <title>Vimthon</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/vimthon.css' %}">
-        <!-- indicamos el stylesheet a utilizar -->
+        <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"
+         rel="stylesheet" type="text/css">
+       
+        <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/vimthon.css') }}">
 
-        <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        <!-- indicamos el stylesheet a utilizar -->
  
         <!-- JQuery -->
+         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="{% static 'js/script.js' %}"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script> 
 
     </head>
 
@@ -22,9 +22,11 @@
         <div class="page-header">
             <h1 align="center"><a href="/">Vimthon</a></h1>
 
-            <a href="https://github.com/LucianoFromTrelew/Vimthon" target="_blank" class="button-github"><img src="{% static "images/github.png" %}" alt="Vimthon on GitHub" class="icon"/>GitHub</a>
             
-            <a href="https://hub.docker.com/r/lucianofromtrelew/vimthon/" target="_blank" class="button-docker"><img src="{% static "images/docker.png" %}" alt="Vimthon on DockerHub" class="icon"/>DockerHub</a>
+            <a href="https://github.com/LucianoFromTrelew/Vimthon" target="_blank" class="button-github">
+                <img src="{{ url_for('static', filename='images/github.png') }}" alt="Vimthon on GitHub" class="icon"/>GitHub</a>
+            <a href="https://hub.docker.com/r/lucianofromtrelew/vimthon/" target="_blank" class="button-docker">
+                <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Vimthon on DockerHub" class="icon"/>DockerHub</a>
         </div>
         <!-- Place this tag where you want the button to render. -->
         <div class="content container">

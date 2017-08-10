@@ -1,4 +1,5 @@
 from vimthon import app
+from flask import render_template
 from . import forms, utils
 import re
 import lorem 
@@ -7,9 +8,11 @@ cursor = -1
 
 
 @app.route('/')
-@app.route('/index')
-def index():
-    return "Hello, World!"
+def root():
+    return render_template("vimthon/coso.html")
+    # return "Hello, World!"
+
+
 #def main(request):
 #    if request.method == 'POST' :
 #        form = forms.RegexForm(request.POST)

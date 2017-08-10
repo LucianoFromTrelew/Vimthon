@@ -13,3 +13,18 @@
 #		RegexValidator(
 #			regex=rgx,
 #			message='Wrong format')])
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, BooleanField
+from wtforms.validators import DataRequired, ValidationError
+import re
+class LoginForm(FlaskForm):
+    regex = StringField('regex', validators=[DataRequired()])
+    remember_me = BooleanField('remember_me', default=False)
+
+    def validate_regex(form, field):
+
+        regex = re.compile(r':(%|\d+,\d+)?s/(.*)/(.+)/g(i)?')
+        match = regex.search(field.data)
+        if not match:
+            raise ValidationError("que onda man te sentis zarpado EEEEEEEEEEEEEEEEEe")
