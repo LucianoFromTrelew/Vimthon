@@ -15,10 +15,7 @@ def main(request):
                 regex = form.cleaned_data['regex']
                 match = re.search(utils.REGEX, regex)
                 form = forms.RegexForm()
-                text = utils.reemplazar(text, match, cursor)
-                # search = re.compile(match.group(2))
-                # text = re.sub(search, match.group(3), text)
-                form.fields['text'].initial=text
+                form.fields['text'].initial = utils.reemplazar(text, match, cursor)
                 return render(request, 'vimthon/main.html', {'form':form})
         return render(request, 'vimthon/main.html', {'form':form})
     else:
