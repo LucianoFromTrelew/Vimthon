@@ -25,15 +25,15 @@ def reemplazar(texto, matches, cursor):
             nums = matches.group(1).split(',')
             minimo = int(nums[0])
             maximo = int(nums[1])
-            print(minimo,maximo)
+            # print(minimo,maximo)
             lineas = splitear_lineas(texto)
-            print('splitie')
+            # print('splitie')
             # print(lineas)
-            print('vamo a imprimir')
-            print(lineas[minimo-1:maximo])
+            # print('vamo a imprimir')
+            # print(lineas[minimo-1:maximo])
             reemp = []
             for l in lineas[minimo-1:maximo]:
-                reemp.append(re.sub(matches.group(2), matches.group(3), l, flags))
+                reemp.append(regex.sub(matches.group(3), l, flags))
             
             lineas[minimo-1:maximo] = reemp
             #reemplazo en rango
@@ -44,7 +44,7 @@ def reemplazar(texto, matches, cursor):
 
         #reemplazo en linea
         # print("reemplazo linea, cursor en {}".format(cursor))
-        print("reemplazo linea")
+        # print("reemplazo linea")
         cursor_actual = linea_columna(texto, cursor)[0]
         lineas = splitear_lineas(texto)
         lineas[cursor_actual] = regex.sub(matches.group(3), lineas[cursor_actual])
