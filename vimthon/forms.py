@@ -15,10 +15,13 @@
 #			message='Wrong format')])
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
+from wtforms import StringField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, ValidationError
 import re
 class LoginForm(FlaskForm):
+
+    text = TextAreaField(render_kw={"rows": 15, "cols": 100})
+
     regex = StringField('regex', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
 

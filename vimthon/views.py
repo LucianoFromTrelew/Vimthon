@@ -1,6 +1,7 @@
 from vimthon import app
 from flask import render_template
-from . import forms, utils
+# from . import forms, utils
+from .forms import LoginForm
 import re
 import lorem 
 
@@ -9,7 +10,9 @@ cursor = -1
 
 @app.route('/')
 def root():
-    return render_template("vimthon/coso.html")
+    # return render_template("vimthon/coso.html")
+    form = LoginForm()
+    return render_template("vimthon/main.html", form=form)
     # return "Hello, World!"
 
 

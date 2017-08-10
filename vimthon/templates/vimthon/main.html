@@ -1,10 +1,12 @@
-{% extends 'base.html'%}
+{% extends 'vimthon/base.html'%}
 
 {% block content %}
 
 
-<form method="POST" id="text_form" class="post-form">{% csrf_token %}
-  	{{ form }}
+<form method="POST" id="text_form" class="post-form">
+    {{ form.hidden_tag() }}
+      {{ form.text }}
+      {{ form.regex }}
 	<button id="submitBtn" type="submit" class="save btn btn-default">Send</button>
 </form>
 
