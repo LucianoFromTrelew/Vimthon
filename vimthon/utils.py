@@ -20,16 +20,21 @@ def reemplazar(texto, matches, cursor):
         elif(re.search(RE_RNG, matches.group(1))):
             print("reemplazo en rango")
             nums = matches.group(1).split(',')
-            minimo = nums[0]
-            maximo = nums[1]
+            minimo = int(nums[0])
+            maximo = int(nums[1])
             print(minimo,maximo)
             lineas = splitear_lineas(texto)
+            print('splitie')
             # print(lineas)
+            print('vamo a imprimir')
             print(lineas[minimo-1:maximo])
-
+            reemp = []
+            for l in lineas[minimo-1:maximo]:
+                reemp.append(re.sub(matches.group(2), matches.group(3), l, flags))
+            
+            lineas[minimo-1:maximo] = reemp
             #reemplazo en rango
-            return "rango"
-            pass
+            return "\n".join(lineas)
     except TypeError:
         #si la expr no es un "%" y el rango, cuando la queremos acceder para preguntar qué es, nos lanza la
         #excepción de TypeError
