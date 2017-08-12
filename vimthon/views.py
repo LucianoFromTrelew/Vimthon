@@ -1,19 +1,46 @@
 from vimthon import app
-from flask import render_template
-# from . import forms, utils
-from .forms import LoginForm
+from flask import render_template, request
+from . import forms, utils
+from .forms import RegexForm
 import re
-import lorem 
+import lorem
 
 cursor = -1
+LOREM_TEXT = lorem.text()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def root():
-    # return render_template("vimthon/coso.html")
-    form = LoginForm()
+    form = RegexForm()
+    if form.validate_on_submit():
+        match = re.search(utils.REGEX, form.regex.data)
+        form.text.data = utils.reemplazar(form.text.data, match, cursor)
+        print("todo ok")
+    else:
+        form.text.data = LOREM_TEXT
+        print("todo mal")
     return render_template("vimthon/main.html", form=form)
     # return "Hello, World!"
+
+
+# definimos que la url '/cursor' pueda recibir tanto peticiones GET como POST
+# No se si es necesario para el script del cursor, lo estaba probando pero no estaria dando bola :/
+
+@app.route('/cursor', methods=['GET', 'POST'])
+def set_cursor():
+    global cursor 
+#    cursor = request.json['cursor']
+    cursor = request.form['cursor'] 
+    print('mostranding...')
+    print("CURSOR: {}".format(cursor))
+#    cursor = int(request.GET.get('cursor', None))
+#    if cursor is not None:
+#        print('ahi va')
+#        if cursor != -1 :
+#            return HttpResponse('success')
+#    else:
+#        return HttpResponse('ni ahi')
+
 
 
 #def main(request):
@@ -32,18 +59,6 @@ def root():
 #        form.fields['text'].initial = lorem.paragraph
 #        return render(request, 'vimthon/main.html', {'form':form})
 #
-#@csrf_exempt
-#def set_cursor(request):
-#    global cursor 
-#    cursor = int(request.GET.get('cursor', None))
-#    
-#    if cursor is not None:
-#        print('ahi va')
-#        if cursor != -1 :
-#            return HttpResponse('success')
-#    else:
-#        return HttpResponse('ni ahi')
-#
-#
+
 ## Create your views here.
 #

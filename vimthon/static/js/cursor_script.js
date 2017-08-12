@@ -1,8 +1,9 @@
 $(document).ready(function(){
     $('#text_form').submit(function(event){
         var position = cursor();
-        var datis;
+        console.log('hola k ase');
         $.ajax({
+            type: "POST",
             url: '/cursor',
             data: {
                 'cursor':position,
@@ -19,7 +20,7 @@ $(document).ready(function(){
 
 
 function cursor(){
-    var start = $('#id_text')[0].selectionStart;
-    var end = $('#id_text')[0].selectionEnd;
+    var start = $('#text')[0].selectionStart;
+    var end = $('#text')[0].selectionEnd;
     return (start==end) ? start : -1;
 }
