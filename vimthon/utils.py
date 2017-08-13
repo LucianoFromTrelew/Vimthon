@@ -55,7 +55,6 @@ def linea_columna(cadena, pos):
     todo = splitear_lineas(cadena)
     col = pos
     while (col - (len(todo[linea]))) > 0:
-        print('linea: {} | col: {} | len(todo): {}'.format(linea, col, len(todo)))
         col = col-(len(todo[linea])+1)
         linea+=1
     return (linea,col+1)

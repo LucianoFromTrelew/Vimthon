@@ -1,6 +1,5 @@
 $(document).ready(function(){
     $('#text_form').submit(function(event){
-        console.log('Holu');
         var position = cursor();
         console.log('hola k ase');
         $.ajax({
