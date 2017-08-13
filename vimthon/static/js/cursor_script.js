@@ -1,7 +1,6 @@
 $(document).ready(function(){
     $('#text_form').submit(function(event){
         var position = cursor();
-        console.log('hola k ase');
         $.ajax({
             type: "POST",
             url: '/cursor',

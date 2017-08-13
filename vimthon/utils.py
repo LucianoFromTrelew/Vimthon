@@ -17,20 +17,12 @@ def reemplazar(texto, matches, cursor):
     try:
         if(re.search(RE_PER, matches.group(1))):
             #reemplazo en todo el texto
-            # print("reemplazar todo")
             return regex.sub(matches.group(3), texto)
         else:
-        # elif(re.search(RE_RNG, matches.group(1))):
-            # print("reemplazo en rango")
             nums = matches.group(1).split(',')
             minimo = int(nums[0])
             maximo = int(nums[1])
-            # print(minimo,maximo)
             lineas = splitear_lineas(texto)
-            # print('splitie')
-            # print(lineas)
-            # print('vamo a imprimir')
-            # print(lineas[minimo-1:maximo])
             reemp = []
             for l in lineas[minimo-1:maximo]:
                 reemp.append(regex.sub(matches.group(3), l, flags))
@@ -43,8 +35,6 @@ def reemplazar(texto, matches, cursor):
         #excepción de TypeError
 
         #reemplazo en linea
-        # print("reemplazo linea, cursor en {}".format(cursor))
-        # print("reemplazo linea")
         cursor_actual = linea_columna(texto, cursor)[0]
         lineas = splitear_lineas(texto)
         lineas[cursor_actual] = regex.sub(matches.group(3), lineas[cursor_actual])
