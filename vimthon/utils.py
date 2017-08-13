@@ -55,9 +55,10 @@ def linea_columna(cadena, pos):
     todo = splitear_lineas(cadena)
     col = pos
     while (col - (len(todo[linea]))) > 0:
+        print('linea: {} | col: {} | len(todo): {}'.format(linea, col, len(todo)))
         col = col-(len(todo[linea])+1)
         linea+=1
     return (linea,col+1)
 
 def splitear_lineas(texto):
-    return [c for i in texto.split('\r') for c in i.split('\n') if c != '']
+    return [c for c in texto.split('\r' + '\n') ]

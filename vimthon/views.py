@@ -30,7 +30,7 @@ def root():
 def set_cursor():
     global cursor 
 #    cursor = request.json['cursor']
-    cursor = request.form['cursor'] 
+    cursor = int(request.form['cursor'])
     print('mostranding...')
     print("CURSOR: {}".format(cursor))
 #    cursor = int(request.GET.get('cursor', None))
