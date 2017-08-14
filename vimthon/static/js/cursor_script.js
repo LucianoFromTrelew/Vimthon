@@ -8,9 +8,7 @@ $(document).ready(function(){
                 'cursor':position,
             },
             dataType: 'json',
-            success: function (data){
-                window.alert('hol')    
-            }
+            success: function (data){}
         });
 
 

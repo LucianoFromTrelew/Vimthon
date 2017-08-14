@@ -1,5 +1,5 @@
 from vimthon import app
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from . import forms, utils
 from .forms import RegexForm
 import re
@@ -27,3 +27,4 @@ def root():
 def set_cursor():
     global cursor 
     cursor = int(request.form['cursor'])
+    return jsonify({"success": True})
