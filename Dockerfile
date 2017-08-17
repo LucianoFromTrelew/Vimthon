@@ -7,6 +7,8 @@ RUN apt-get update \
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
-RUN git clone https://github.com/LucianoFromTrelew/Vimthon
+RUN git clone https://github.com/LucianoFromTrelew/Vimthon.git
+WORKDIR Vimthon/
+RUN git checkout flask
 EXPOSE 5000
-CMD ["python", "Vimthon/run.py"]
+CMD ["python", "run.py"]
