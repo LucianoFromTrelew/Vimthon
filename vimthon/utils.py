@@ -7,6 +7,29 @@ RE_RNG = re.compile(r'\d+,\d+')
 
 def reemplazar(texto, matches, cursor):
     
+    def repl_all():
+        return search.sub(repl, texto)
+
+    def repl_range():
+        nums = substitute.split(',')
+        minimo = int(nums[0])
+        maximo = int(nums[1])
+        lineas = splitear_lineas(texto)
+        reemp = []
+    
+        for l in lineas[minimo-1:maximo]:
+            reemp.append(search.sub(repl, l, flags))
+        
+        lineas[minimo-1:maximo] = reemp
+        #reemplazo en rango
+        return "\n".join(lineas)
+    
+    def repl_line():
+        cursor_actual = linea_columna(texto, cursor)[0]
+        lineas = splitear_lineas(texto)
+        lineas[cursor_actual] = search.sub(repl, lineas[cursor_actual])
+        return "\n".join(lineas)
+
     flags = 0
 
     if(matches.group(4) != None):
@@ -16,31 +39,18 @@ def reemplazar(texto, matches, cursor):
     search = re.compile(matches.group(2), flags)
     repl = matches.group(3)
 
+    reemplazos = {RE_PER: repl_all, RE_RNG: repl_range}
+    
+    lista_func = []
     try:
-        if(RE_PER.search(substitute)):
-            #reemplazo en todo el texto
-            return search.sub(repl, texto)
-        else:
-            nums = substitute.split(',')
-            minimo = int(nums[0])
-            maximo = int(nums[1])
-            lineas = splitear_lineas(texto)
-            reemp = []
-            for l in lineas[minimo-1:maximo]:
-                reemp.append(search.sub(repl, l, flags))
-            
-            lineas[minimo-1:maximo] = reemp
-            #reemplazo en rango
-            return "\n".join(lineas)
+        # Buscamos la opcion que matchee con la que nos pasaron
+        lista_func = list(filter(lambda x: re.match(x[0], substitute), reemplazos.items()))
     except TypeError:
-        #si la expr no es un "%" y el rango, cuando la queremos acceder para preguntar qué es, nos lanza la
-        #excepción de TypeError
-
-        #reemplazo en linea
-        cursor_actual = linea_columna(texto, cursor)[0]
-        lineas = splitear_lineas(texto)
-        lineas[cursor_actual] = search.sub(repl, lineas[cursor_actual])
-        return "\n".join(lineas)
+        # Si no es el % ni el rango, entonces es el reemplazo en linea
+        lista_func.append(('', repl_line))
+    
+    # ejecutamos la funcion correspondiente
+    return (lista_func[0])[1]()
 
 def linea_columna(cadena, pos):
     linea = 0

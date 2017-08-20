@@ -20,9 +20,6 @@ def root():
     return render_template("vimthon/main.html", form=form)
 
 
-# definimos que la url '/cursor' pueda recibir tanto peticiones GET como POST
-# No se si es necesario para el script del cursor, lo estaba probando pero no estaria dando bola :/
-
 @app.route('/cursor', methods=['POST'])
 def set_cursor():
     global cursor 
