@@ -13,7 +13,7 @@ LOREM_TEXT = lorem.text()
 def root():
     form = RegexForm()
     if form.validate_on_submit():
-        match = re.search(utils.REGEX, form.regex.data)
+        match = utils.VIM_REGEX.search(form.regex.data)
         form.text.data = utils.reemplazar(form.text.data, match, cursor)
     else:
         form.text.data = LOREM_TEXT

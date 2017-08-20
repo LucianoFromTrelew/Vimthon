@@ -1,8 +1,8 @@
 import re
 
-REGEX = ':(%|\d+,\d+)?s/(.+)/(.*)/g(i)?$'
-RE_PER = '%'
-RE_RNG = '\d+,\d+'
+VIM_REGEX = re.compile(r':(%|\d+,\d+)?s/(.+)/(.*)/g(i)?$')
+RE_PER = re.compile(r'%')
+RE_RNG = re.compile(r'\d+,\d+')
 
 
 def reemplazar(texto, matches, cursor):
@@ -12,20 +12,22 @@ def reemplazar(texto, matches, cursor):
     if(matches.group(4) != None):
         flags = re.IGNORECASE
 
-    regex = re.compile(matches.group(2), flags)
-    
+    substitute = matches.group(1)
+    search = re.compile(matches.group(2), flags)
+    repl = matches.group(3)
+
     try:
-        if(re.search(RE_PER, matches.group(1))):
+        if(RE_PER.search(substitute)):
             #reemplazo en todo el texto
-            return regex.sub(matches.group(3), texto)
+            return search.sub(repl, texto)
         else:
-            nums = matches.group(1).split(',')
+            nums = substitute.split(',')
             minimo = int(nums[0])
             maximo = int(nums[1])
             lineas = splitear_lineas(texto)
             reemp = []
             for l in lineas[minimo-1:maximo]:
-                reemp.append(regex.sub(matches.group(3), l, flags))
+                reemp.append(search.sub(repl, l, flags))
             
             lineas[minimo-1:maximo] = reemp
             #reemplazo en rango
@@ -37,7 +39,7 @@ def reemplazar(texto, matches, cursor):
         #reemplazo en linea
         cursor_actual = linea_columna(texto, cursor)[0]
         lineas = splitear_lineas(texto)
-        lineas[cursor_actual] = regex.sub(matches.group(3), lineas[cursor_actual])
+        lineas[cursor_actual] = search.sub(repl, lineas[cursor_actual])
         return "\n".join(lineas)
 
 def linea_columna(cadena, pos):
