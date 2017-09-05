@@ -16,6 +16,26 @@
 #    |   "and"
 #    |   "or"
 #
+# Esto incluya la produccion _ te permite ningún o varios espacios en blanco
+@builtin "whitespace.ne"
 
-expression -> number "+" number
+sentencia -> asignacion | expression
+
+asignacion -> variable _ "=" _ expression
+
+expression -> 
+        expression _ "+" _ expression _ end
+    |   number _
+    |   variable _
+
+variable -> begin resto
+
+begin -> [_a-zA-Z]  
+
+resto -> caracter | end
+
+caracter -> [_a-zA-Z0-9]
+
+end -> null | "\n"
+
 number -> [0-9]:+
