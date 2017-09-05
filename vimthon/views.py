@@ -14,9 +14,10 @@ def root():
     form = RegexForm()
     if form.validate_on_submit():
         match = utils.VIM_REGEX.search(form.regex.data)
-        form.text.data = utils.reemplazar(form.text.data, match, cursor)
+        #form.text.data = utils.reemplazar(form.text.data, match, cursor)
     else:
-        form.text.data = LOREM_TEXT
+        pass
+        #form.text.data = LOREM_TEXT
     return render_template("vimthon/main.html", form=form)
 
 
