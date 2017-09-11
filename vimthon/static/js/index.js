@@ -17,22 +17,13 @@ $(document).ready(function(){
 
     $('#editor').bind('DOMSubtreeModified', update);
 
-
-    
-
-
 });
 
-function test_grammar(texto){
-    var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-    p.feed(texto);
-    console.log(p.results);
-}
 var update = function() {
     var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
     var texto = $('#editor').html().replace(/<br>/g,'').replace(/<\/div>/g,'').replace(/<div>/g,'\n');
     p.feed(texto)
-    console.log(p.results.toString())
+    console.log(p.results)
 
 }
 

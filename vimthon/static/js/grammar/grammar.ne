@@ -1,10 +1,10 @@
-#asingacion -> variable "=" expression
-#expression -> 
-#        expression operand expression
+#asingacion -> variable "=" expresion
+#expresion -> 
+#        expresion operand expresion
 #    |   variable
-#    |   number
+#    |   numero
 #    |   boolean
-#    |   "not" expression
+#    |   "not" expresion
 #    
 #operand ->
 #        "+"
@@ -19,23 +19,43 @@
 # Esto incluya la produccion _ te permite ningún o varios espacios en blanco
 @builtin "whitespace.ne"
 
-sentencia -> asignacion | expression
+sentencia -> asignacion
 
-asignacion -> variable _ "=" _ expression
+asignacion -> variable _ "=" _ expresion {%
+    function(data){
+        return {
+            variable:data[0],
+            igual:data[2],
+            expresion:data[4]
+        }
+    }
+%}
 
-expression -> 
-        expression _ "+" _ expression _ end
-    |   number _
+expresion -> 
+        expresion _ operador _ expresion {%
+            function(data){
+                return {
+                    operando1:data[0],
+                    operador: data[2],
+                    operando2:data[4]
+                }
+            }
+        %}
+    |   numero _ 
     |   variable _
 
-variable -> begin resto
+variable -> [_a-zA-Z] ([_a-zA-Z0-9]):*
 
-begin -> [_a-zA-Z]  
+operador ->
+        "+"
+    |   "-"
+    |   "*"
+    |   "/"
 
-resto -> caracter | end
-
-caracter -> [_a-zA-Z0-9]
-
-end -> null | "\n"
-
-number -> [0-9]:+
+numero -> [0-9]:+ {% 
+    function(data){
+        return {
+            numero:data.join("").replace(/,/g,"")
+        }
+    }
+%}

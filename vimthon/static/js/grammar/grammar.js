@@ -13,21 +13,43 @@ var grammar = {
     {"name": "__", "symbols": ["__$ebnf$1"], "postprocess": function(d) {return null;}},
     {"name": "wschar", "symbols": [/[ \t\n\v\f]/], "postprocess": id},
     {"name": "sentencia", "symbols": ["asignacion"]},
-    {"name": "sentencia", "symbols": ["expression"]},
-    {"name": "asignacion", "symbols": ["variable", "_", {"literal":"="}, "_", "expression"]},
-    {"name": "expression", "symbols": ["expression", "_", {"literal":"+"}, "_", "expression", "_", "end"]},
-    {"name": "expression", "symbols": ["number", "_"]},
-    {"name": "expression", "symbols": ["variable", "_"]},
-    {"name": "variable", "symbols": ["begin", "resto"]},
-    {"name": "begin", "symbols": [/[_a-zA-Z]/]},
-    {"name": "resto", "symbols": ["caracter"]},
-    {"name": "resto", "symbols": ["end"]},
-    {"name": "caracter", "symbols": [/[_a-zA-Z0-9]/]},
-    {"name": "end", "symbols": []},
-    {"name": "end", "symbols": [{"literal":"\n"}]},
-    {"name": "number$ebnf$1", "symbols": [/[0-9]/]},
-    {"name": "number$ebnf$1", "symbols": ["number$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "number", "symbols": ["number$ebnf$1"]}
+    {"name": "asignacion", "symbols": ["variable", "_", {"literal":"="}, "_", "expresion"], "postprocess": 
+        function(data){
+            return {
+                variable:data[0],
+                igual:data[2],
+                expresion:data[4]
+            }
+        }
+        },
+    {"name": "expresion", "symbols": ["expresion", "_", "operador", "_", "expresion"], "postprocess": 
+        function(data){
+            return {
+                operando1:data[0],
+                operador: data[2],
+                operando2:data[4]
+            }
+        }
+                },
+    {"name": "expresion", "symbols": ["numero", "_"]},
+    {"name": "expresion", "symbols": ["variable", "_"]},
+    {"name": "variable$ebnf$1", "symbols": []},
+    {"name": "variable$ebnf$1$subexpression$1", "symbols": [/[_a-zA-Z0-9]/]},
+    {"name": "variable$ebnf$1", "symbols": ["variable$ebnf$1", "variable$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "variable", "symbols": [/[_a-zA-Z]/, "variable$ebnf$1"]},
+    {"name": "operador", "symbols": [{"literal":"+"}]},
+    {"name": "operador", "symbols": [{"literal":"-"}]},
+    {"name": "operador", "symbols": [{"literal":"*"}]},
+    {"name": "operador", "symbols": [{"literal":"/"}]},
+    {"name": "numero$ebnf$1", "symbols": [/[0-9]/]},
+    {"name": "numero$ebnf$1", "symbols": ["numero$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "numero", "symbols": ["numero$ebnf$1"], "postprocess":  
+        function(data){
+            return {
+                numero:data.join("").replace(/,/g,"")
+            }
+        }
+        }
 ]
   , ParserStart: "sentencia"
 }
