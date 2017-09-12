@@ -12,7 +12,6 @@
     const asignacion = (data, index, reject) => {
 
         return {
-            variable:data[0].join("").replace(/,/g,""),
             igual:data[2],
             expresion:data[4]
         }
@@ -41,6 +40,14 @@
         }
     };
 
+
+    const variable = (data, index, reject) => {
+
+        return {
+            variable:data[0]
+        }
+    };
+
 %}
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
@@ -58,7 +65,7 @@ expresion ->
 
 numero -> [0-9]:+ {% numero %}
 
-variable -> [_a-zA-Z] [_a-zA-Z0-9-]:*
+variable -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% variable %}
 
 operador ->
         "+"
