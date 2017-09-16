@@ -15,16 +15,22 @@ $(document).ready(function(){
        });
     });
 
-    $('#editor').bind('DOMSubtreeModified', update);
+    console.log("{0} {1}".format("hello", "world"))
+    $('#code_editor').bind('DOMSubtreeModified', update);
 
 });
 
 var update = function() {
-    var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
-    var texto = $('#editor').html().replace(/<br>/g,'').replace(/<\/div>/g,'').replace(/<div>/g,'\n');
-    p.feed(texto)
-    console.log(p.results)
+  var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
+  var texto = $('#code_editor').html().replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/<br>/g,'').replace(/ /g,"").replace(/\n/g, "")
+
+  p.feed(texto)
+  texto = p.results[0][0]
+
+  // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
+  console.log(JSON.stringify(texto, null, 2))
+  // console.log(texto)
 }
 
 
