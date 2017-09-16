@@ -9,9 +9,27 @@
 #http://hardmath123.github.io/earley.html#comment-toggle
 
 @{%
+    if (!String.prototype.format) {
+      String.prototype.format = function() {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) { 
+          return typeof args[number] != 'undefined'
+            ? args[number]
+            : match
+          ;
+        });
+      };
+    }
+
+    function spanner(color, texto){
+        var inicio_span = "<span style:'color: {0}'>".format(color) 
+        return inicio_span + texto + "</span>"
+    }
+
     const asignacion = (data, index, reject) => {
 
         return {
+            variable:spanner("red", eval(data[0])),
             igual:data[2],
             expresion:data[4]
         }
@@ -21,7 +39,7 @@
 
         return {
             primer_op:data[0],
-            operador:data[2],
+            operador: data[2],
             segundo_op:data[4]
         }
     };
@@ -33,35 +51,25 @@
         }
     };
 
-    const espacio = (data, index, reject) => {
-
-        return {
-            espacio:null
-        }
-    };
-
-
     const variable = (data, index, reject) => {
 
         return {
-            variable:data[0]
+            variable:data.join().replace(/,/g, ''),
         }
     };
-
 %}
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
 
 sentencia -> asignacion
-    | expresion
+    | expresion 
 
 asignacion -> variable ESPACIO "=" ESPACIO expresion {% asignacion %}
 
 expresion -> 
-        expresion ESPACIO operador ESPACIO expresion {% expresion %}
+        expresion ESPACIO operador ESPACIO expresion 
     |   numero 
-    |   variable
-    |   null
+    |   variable {% expresion %}
 
 numero -> [0-9]:+ {% numero %}
 
@@ -73,4 +81,4 @@ operador ->
     |   "*"
     |   "/"
 
-ESPACIO -> _ {% espacio %}
+ESPACIO -> _ 
