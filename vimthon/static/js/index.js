@@ -20,6 +20,8 @@ $(document).ready(function(){
 
 });
 
+
+
 function spanner(color){
   return "<span style:'color: {0}'>".format(color) 
 }
@@ -31,7 +33,14 @@ function spanner(color){
  *
  *  Habría que ver cómo se pueden manejar las situaciones en las que se quiere acceder a un miembro de un objeto que no tiene dicho miembro
  *  Osea, cómo atajar la excepción "AttributeError"
+ * 
+ * 
+ *  otra cosa puede ser, recorrer el json, e ir armando una cadena con todo lo parseado, ya coloreado
  * */
+
+// var miembros = [
+//   {"variable"}
+// ]
 
 var update = function() {
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
@@ -43,6 +52,7 @@ var update = function() {
 
   // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
   console.log(JSON.stringify(texto, null, 2))
+  console.log("La variable se llama " + texto[miembros[0]][miembros[0]])
   // console.log(texto)
 }
 
