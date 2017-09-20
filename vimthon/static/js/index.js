@@ -20,6 +20,19 @@ $(document).ready(function(){
 
 });
 
+function spanner(color){
+  return "<span style:'color: {0}'>".format(color) 
+}
+/*
+ *  Lo que se me ocurre es armar un arreglo con los nombres de los miembros del JSON que nos devuelve la gramatica
+ *  ir recorriendo el JSON con esos nombres, e ir envolviendo acorde
+ *
+ *  La que podria ser es armar un diccionario que tenga el nombre de miembro, y el color, asi pintamos segun el miembro
+ *
+ *  Habría que ver cómo se pueden manejar las situaciones en las que se quiere acceder a un miembro de un objeto que no tiene dicho miembro
+ *  Osea, cómo atajar la excepción "AttributeError"
+ * */
+
 var update = function() {
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
