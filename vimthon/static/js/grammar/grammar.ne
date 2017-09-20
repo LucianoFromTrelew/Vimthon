@@ -21,15 +21,12 @@
       };
     }
 
-    function spanner(color, texto){
-        var inicio_span = "<span style:'color: {0}'>".format(color) 
-        return inicio_span + texto + "</span>"
-    }
+
 
     const asignacion = (data, index, reject) => {
 
         return {
-            variable:spanner("red", eval(data[0])),
+            variable:data[0],
             igual:data[2],
             expresion:data[4]
         }
