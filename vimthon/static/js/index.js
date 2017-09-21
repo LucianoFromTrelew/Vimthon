@@ -52,7 +52,16 @@ var update = function() {
 
   // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
   console.log(JSON.stringify(texto, null, 2))
-  console.log("La variable se llama " + texto[miembros[0]][miembros[0]])
+ 
+  var keys = Object.keys(texto)
+  for (var index = 0; index < keys.length; index++) {
+    console.log(keys[index])
+  }
+
+  for (var k in keys) {
+    console.log(keys[k])
+  }
+  // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
   // console.log(texto)
 }
 
