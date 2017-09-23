@@ -16,7 +16,8 @@ $(document).ready(function(){
     });
 
     console.log("{0} {1}".format("hello", "world"))
-    $('#editor').bind('DOMSubtreeModified', update);
+    var actualizar = update()
+    $('#code_editor').bind('DOMSubtreeModified', actualizar);
 
 });
 
@@ -38,36 +39,43 @@ function spanner(color){
  *  otra cosa puede ser, recorrer el json, e ir armando una cadena con todo lo parseado, ya coloreado
  * */
 
-// var miembros = [
-//   {"variable"}
-// ]
 
-var update = function() {
-  console.log('hola')
+
+function update() {
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
+  // var miembros = [
+  //   {"variable"}
+  // ]
+  function wrapper(){
 
-  var texto = $('#editor').html().replace(/<div>/g,'\n').replace(/<\/div>/g,'').replace(/<br>/g,'').replace(/&lt;/g, '<')+'\n'
+    var texto = $('#code_editor').html()
+    .replace(/<div>/g,'\n').replace(/<\/div>/g,'')
+    .replace(/<br>/g,'')
+    .replace(/<code>/g,'').replace(/<\/code>/g,'')
+    // .replace(/&lt;/g, '<')+'\n'
 
-  console.log(texto)
-  p.feed(texto)
+    console.log(texto)
+    p.feed(texto)
 
-  console.log(p.results)
+    console.log(p.results)
 
-  // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
-  console.log(JSON.stringify(p.results, null, 2))
- 
+    // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
+    console.log(JSON.stringify(p.results, null, 2))
+  
 
-  var keys = Object.keys(texto)
-  // for (var index = 0; index < keys.length; index++) {
-  //   console.log(keys[index])
-  // }
+    // var keys = Object.keys(texto)
+    // for (var index = 0; index < keys.length; index++) {
+    //   console.log(keys[index])
+    // }
 
-  // for (var k in keys) {
-  //   console.log(keys[k])
-  // }
-  // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
-  // console.log(texto)
-}
+    // for (var k in keys) {
+    //   console.log(keys[k])
+    // }
+    // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
+    // console.log(texto)
+  }
+  return wrapper
+} 
 
 
 function cursor(){
