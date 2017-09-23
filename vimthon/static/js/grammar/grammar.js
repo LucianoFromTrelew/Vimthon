@@ -3,24 +3,11 @@
 (function () {
 function id(x) {return x[0]; }
 
-    if (!String.prototype.format) {
-      String.prototype.format = function() {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) { 
-          return typeof args[number] != 'undefined'
-            ? args[number]
-            : match
-          ;
-        });
-      };
-    }
-
-
 
     const cuerpo = (data, index, reject) => {
 
         return {
-            cuerpo:data[1]
+            cuerpo:data[0]
         }
     };
 
@@ -42,17 +29,17 @@ function id(x) {return x[0]; }
         }
     };
 
-    const numero = (data, index, reject) => {
+    const NUMERO = (data, index, reject) => {
 
         return {
-            numero:data.join("")
+            NUMERO:data.join("")
         }
     };
 
-    const variable = (data, index, reject) => {
+    const VARIABLE = (data, index, reject) => {
 
         return {
-            variable:data.join().replace(/,/g, ''),
+            VARIABLE:data.join().replace(/,/g, ''),
         }
     };
 
@@ -89,48 +76,45 @@ var grammar = {
     {"name": "wschar", "symbols": [/[ \t\n\v\f]/], "postprocess": id},
     {"name": "cuerpo$ebnf$1", "symbols": []},
     {"name": "cuerpo$ebnf$1", "symbols": ["cuerpo$ebnf$1", "linea"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "cuerpo", "symbols": ["ESPACIO", "cuerpo$ebnf$1", "ESPACIO"], "postprocess": cuerpo},
+    {"name": "cuerpo", "symbols": ["cuerpo$ebnf$1"], "postprocess": cuerpo},
     {"name": "linea", "symbols": ["ESPACIO", "sentencia", "ESPACIO", {"literal":"\n"}], "postprocess": linea},
-    {"name": "linea", "symbols": ["ESPACIO", {"literal":"\n"}]},
     {"name": "sentencia", "symbols": ["asignacion"]},
     {"name": "sentencia", "symbols": ["expresion"]},
     {"name": "sentencia", "symbols": ["bucle"]},
     {"name": "bucle$string$1", "symbols": [{"literal":"w"}, {"literal":"h"}, {"literal":"i"}, {"literal":"l"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "bucle", "symbols": ["bucle$string$1", "ESPACIO", "expresion", {"literal":":"}], "postprocess": bucle},
-    {"name": "asignacion", "symbols": ["variable", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
+    {"name": "asignacion", "symbols": ["VARIABLE", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
     {"name": "expresion", "symbols": ["operacion"]},
-    {"name": "expresion", "symbols": ["numero"], "postprocess": expresion},
-    {"name": "expresion", "symbols": ["variable"], "postprocess": expresion},
+    {"name": "expresion", "symbols": ["NUMERO"], "postprocess": expresion},
+    {"name": "expresion", "symbols": ["VARIABLE"], "postprocess": expresion},
     {"name": "operacion", "symbols": ["aritmetica"]},
     {"name": "operacion", "symbols": ["booleana"]},
-    {"name": "aritmetica", "symbols": ["expresion", "ESPACIO", "aritmetico", "ESPACIO", "expresion"], "postprocess": operacion},
-    {"name": "booleana", "symbols": ["expresion", "ESPACIO", "booleano", "ESPACIO", "expresion"], "postprocess": operacion},
-    {"name": "numero$ebnf$1", "symbols": [/[0-9]/]},
-    {"name": "numero$ebnf$1", "symbols": ["numero$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "numero", "symbols": ["numero$ebnf$1"], "postprocess": numero},
-    {"name": "variable$ebnf$1", "symbols": []},
-    {"name": "variable$ebnf$1", "symbols": ["variable$ebnf$1", /[_a-zA-Z0-9-]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "variable", "symbols": [/[_a-zA-Z]/, "variable$ebnf$1"], "postprocess": variable},
-    {"name": "operador", "symbols": ["aritmetico"]},
-    {"name": "operador", "symbols": ["booleano"]},
-    {"name": "aritmetico", "symbols": [{"literal":"+"}]},
-    {"name": "aritmetico", "symbols": [{"literal":"-"}]},
-    {"name": "aritmetico", "symbols": [{"literal":"*"}]},
-    {"name": "aritmetico", "symbols": [{"literal":"/"}]},
-    {"name": "booleano$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$1"]},
-    {"name": "booleano$string$2", "symbols": [{"literal":"o"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$2"]},
-    {"name": "booleano", "symbols": [{"literal":">"}]},
-    {"name": "booleano", "symbols": [{"literal":"<"}]},
-    {"name": "booleano$string$3", "symbols": [{"literal":">"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$3"]},
-    {"name": "booleano$string$4", "symbols": [{"literal":"<"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$4"]},
-    {"name": "booleano$string$5", "symbols": [{"literal":"="}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$5"]},
-    {"name": "booleano$string$6", "symbols": [{"literal":"!"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "booleano", "symbols": ["booleano$string$6"]},
+    {"name": "aritmetica", "symbols": ["expresion", "ESPACIO", "ARITMETICO", "ESPACIO", "expresion"], "postprocess": operacion},
+    {"name": "booleana", "symbols": ["expresion", "ESPACIO", "BOOLEANO", "ESPACIO", "expresion"], "postprocess": operacion},
+    {"name": "NUMERO$ebnf$1", "symbols": [/[0-9]/]},
+    {"name": "NUMERO$ebnf$1", "symbols": ["NUMERO$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "NUMERO", "symbols": ["NUMERO$ebnf$1"], "postprocess": NUMERO},
+    {"name": "VARIABLE$ebnf$1", "symbols": []},
+    {"name": "VARIABLE$ebnf$1", "symbols": ["VARIABLE$ebnf$1", /[_a-zA-Z0-9-]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "VARIABLE", "symbols": [/[_a-zA-Z]/, "VARIABLE$ebnf$1"], "postprocess": VARIABLE},
+    {"name": "ARITMETICO", "symbols": [{"literal":"+"}]},
+    {"name": "ARITMETICO", "symbols": [{"literal":"-"}]},
+    {"name": "ARITMETICO", "symbols": [{"literal":"*"}]},
+    {"name": "ARITMETICO", "symbols": [{"literal":"/"}]},
+    {"name": "BOOLEANO$string$1", "symbols": [{"literal":"a"}, {"literal":"n"}, {"literal":"d"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$1"]},
+    {"name": "BOOLEANO$string$2", "symbols": [{"literal":"o"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$2"]},
+    {"name": "BOOLEANO", "symbols": [{"literal":">"}]},
+    {"name": "BOOLEANO", "symbols": [{"literal":"<"}]},
+    {"name": "BOOLEANO$string$3", "symbols": [{"literal":">"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$3"]},
+    {"name": "BOOLEANO$string$4", "symbols": [{"literal":"<"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$4"]},
+    {"name": "BOOLEANO$string$5", "symbols": [{"literal":"="}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$5"]},
+    {"name": "BOOLEANO$string$6", "symbols": [{"literal":"!"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$6"]},
     {"name": "ESPACIO", "symbols": ["_"]}
 ]
   , ParserStart: "cuerpo"

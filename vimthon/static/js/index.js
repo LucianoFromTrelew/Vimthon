@@ -1,4 +1,5 @@
 // Document ready stuff
+var codigo = '#editor'
 $(document).ready(function(){
     // cuando submiteo el form
     $('#text_form').submit(function(event){
@@ -15,9 +16,8 @@ $(document).ready(function(){
        });
     });
 
-    console.log("{0} {1}".format("hello", "world"))
     var actualizar = update()
-    $('#code_editor').bind('DOMSubtreeModified', actualizar);
+    $(codigo).bind('DOMSubtreeModified', actualizar);
 
 });
 
@@ -42,21 +42,20 @@ function spanner(color){
 
 
 function update() {
-  var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
   // var miembros = [
   //   {"variable"}
   // ]
   function wrapper(){
 
-    var texto = $('#code_editor').html()
-    .replace(/<br>/g,'\n')
-    .replace(/<code>/g,'').replace(/<\/code>/g,'')
-    // .replace(/&lt;/g, '<')+'\n'
+    var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
+    var texto = $(codigo).html().replace(/<br>/g,'').replace(/<div>/g,'\n').replace(/<\/div>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    //.replace(/<code>/g,'').replace(/<\/code>/g,'')
+    // .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 
     console.log(texto)
     p.feed(texto)
 
-    // console.log(p.results)
+    console.log(p.results)
 
     // console.log(JSON.stringify(p.results, null, 2))
     // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";

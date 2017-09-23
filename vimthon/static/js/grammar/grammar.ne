@@ -13,7 +13,7 @@
     const cuerpo = (data, index, reject) => {
 
         return {
-            cuerpo:data[1]
+            cuerpo:data[0]
         }
     };
 
@@ -74,11 +74,10 @@
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
 
-cuerpo -> ESPACIO linea:* ESPACIO {% cuerpo %}
+cuerpo -> linea:* {% cuerpo %}
 
 linea -> 
         ESPACIO sentencia ESPACIO "\n" {% linea %}
-    |   ESPACIO "\n" 
 
 sentencia -> asignacion
     | expresion 
