@@ -23,28 +23,35 @@
 
 
 
-    const asignacion = (data, index, reject) => {
+    const cuerpo = (data, index, reject) => {
 
         return {
-            variable:data[0],
-            igual:data[2],
-            expresion:data[4]
+            cuerpo:data[0]
         }
     };
 
-    const expresion = (data, index, reject) => {
+
+    const asignacion = (data, index, reject) => {
 
         return {
-            primer_op:data[0],
-            operador: data[2],
-            segundo_op:data[4]
+            izquierdo:data[0],
+            igual:data[2],
+            derecho:data[4]
+        }
+    };
+    const operacion = (data, index, reject) => {
+
+        return {
+            izquierdo:data[0],
+            operador: data[2][0][0],
+            derecho:data[4]
         }
     };
 
     const numero = (data, index, reject) => {
 
         return {
-            numero:parseInt(data[0].join(''), 10)
+            numero:data.join("")
         }
     };
 
@@ -54,28 +61,78 @@
             variable:data.join().replace(/,/g, ''),
         }
     };
+
+    const linea = (data, index, reject) => { 
+        return {
+            linea:data[1][0],
+        }
+    };
+
+    const bucle = (data, index, reject) => { 
+        return {
+            while:data[0],
+            condicion:data[2][0],
+            dospuntos:data[3]
+            
+        }
+    };
+
+    const expresion = (data, index, reject) => { 
+        return {
+            expresion:data[0]
+
+        }
+    };
 %}
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
 
+cuerpo -> linea:* {% cuerpo %}
+
+linea -> 
+        ESPACIO sentencia ESPACIO "\n" {% linea %}
+    |   ESPACIO "\n" 
+
 sentencia -> asignacion
     | expresion 
+    | bucle
+
+bucle -> "while" ESPACIO expresion ":" {% bucle %}
 
 asignacion -> variable ESPACIO "=" ESPACIO expresion {% asignacion %}
 
 expresion -> 
-        expresion ESPACIO operador ESPACIO expresion 
-    |   numero 
+        operacion
+    |   numero {% expresion %}
     |   variable {% expresion %}
+
+operacion -> 
+        aritmetica 
+    |   booleana    
+    
+aritmetica -> variable ESPACIO aritmetico ESPACIO expresion {% operacion %}
+booleana -> expresion ESPACIO booleano ESPACIO expresion {% operacion %}
 
 numero -> [0-9]:+ {% numero %}
 
 variable -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% variable %}
 
-operador ->
+operador -> aritmetico | booleano
+
+aritmetico ->
         "+"
     |   "-"
     |   "*"
-    |   "/"
+    |   "/" 
+
+booleano ->
+        "and"
+    |   "or"
+    |   ">"
+    |   "<"
+    |   ">="
+    |   "<="
+    |   "=="
+    |   "!="
 
 ESPACIO -> _ 

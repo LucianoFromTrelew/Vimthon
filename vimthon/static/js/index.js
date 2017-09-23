@@ -16,7 +16,7 @@ $(document).ready(function(){
     });
 
     console.log("{0} {1}".format("hello", "world"))
-    $('#code_editor').bind('DOMSubtreeModified', update);
+    $('#editor').bind('DOMSubtreeModified', update);
 
 });
 
@@ -43,24 +43,28 @@ function spanner(color){
 // ]
 
 var update = function() {
+  console.log('hola')
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
-  var texto = $('#code_editor').html().replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/<br>/g,'').replace(/ /g,"").replace(/\n/g, "")
+  var texto = $('#editor').html().replace(/<div>/g,'\n').replace(/<\/div>/g,'').replace(/<br>/g,'').replace(/&lt;/g, '<')+'\n'
 
+  console.log(texto)
   p.feed(texto)
-  texto = p.results[0][0]
+
+  console.log(p.results)
 
   // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
-  console.log(JSON.stringify(texto, null, 2))
+  console.log(JSON.stringify(p.results, null, 2))
  
-  var keys = Object.keys(texto)
-  for (var index = 0; index < keys.length; index++) {
-    console.log(keys[index])
-  }
 
-  for (var k in keys) {
-    console.log(keys[k])
-  }
+  var keys = Object.keys(texto)
+  // for (var index = 0; index < keys.length; index++) {
+  //   console.log(keys[index])
+  // }
+
+  // for (var k in keys) {
+  //   console.log(keys[k])
+  // }
   // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
   // console.log(texto)
 }
