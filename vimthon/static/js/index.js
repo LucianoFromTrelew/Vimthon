@@ -54,7 +54,7 @@ function update() {
     // .replace(/&lt;/g, '<')+'\n'
 
     console.log(texto)
-    // p.feed(texto)
+    p.feed(texto)
 
     // console.log(p.results)
 

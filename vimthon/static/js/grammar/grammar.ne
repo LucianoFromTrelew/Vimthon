@@ -26,7 +26,7 @@
     const cuerpo = (data, index, reject) => {
 
         return {
-            cuerpo:data[0]
+            cuerpo:data[1]
         }
     };
 
@@ -87,7 +87,7 @@
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
 
-cuerpo -> linea:* {% cuerpo %}
+cuerpo -> ESPACIO linea:* ESPACIO {% cuerpo %}
 
 linea -> 
         ESPACIO sentencia ESPACIO "\n" {% linea %}
@@ -110,7 +110,7 @@ operacion ->
         aritmetica 
     |   booleana    
     
-aritmetica -> variable ESPACIO aritmetico ESPACIO expresion {% operacion %}
+aritmetica -> expresion ESPACIO aritmetico ESPACIO expresion {% operacion %}
 booleana -> expresion ESPACIO booleano ESPACIO expresion {% operacion %}
 
 numero -> [0-9]:+ {% numero %}
