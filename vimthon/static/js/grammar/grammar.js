@@ -32,7 +32,7 @@ function id(x) {return x[0]; }
     const NUMERO = (data, index, reject) => {
 
         return {
-            NUMERO:data.join("")
+            NUMERO:data.join().replace(/,/g, '')
         }
     };
 
@@ -77,7 +77,7 @@ var grammar = {
     {"name": "cuerpo$ebnf$1", "symbols": []},
     {"name": "cuerpo$ebnf$1", "symbols": ["cuerpo$ebnf$1", "linea"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "cuerpo", "symbols": ["cuerpo$ebnf$1"], "postprocess": cuerpo},
-    {"name": "linea", "symbols": ["ESPACIO", "sentencia", "ESPACIO", {"literal":"\n"}], "postprocess": linea},
+    {"name": "linea", "symbols": ["ESPACIO", "sentencia", "ESPACIO", "SALTO"], "postprocess": linea},
     {"name": "sentencia", "symbols": ["asignacion"]},
     {"name": "sentencia", "symbols": ["expresion"]},
     {"name": "sentencia", "symbols": ["bucle"]},
@@ -86,7 +86,7 @@ var grammar = {
     {"name": "asignacion", "symbols": ["VARIABLE", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
     {"name": "expresion", "symbols": ["operacion"]},
     {"name": "expresion", "symbols": ["NUMERO"], "postprocess": expresion},
-    {"name": "expresion", "symbols": ["VARIABLE"], "postprocess": expresion},
+    {"name": "expresion", "symbols": ["VARIABLE"], "postprocess": VARIABLE},
     {"name": "operacion", "symbols": ["aritmetica"]},
     {"name": "operacion", "symbols": ["booleana"]},
     {"name": "aritmetica", "symbols": ["expresion", "ESPACIO", "ARITMETICO", "ESPACIO", "expresion"], "postprocess": operacion},
@@ -115,7 +115,8 @@ var grammar = {
     {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$5"]},
     {"name": "BOOLEANO$string$6", "symbols": [{"literal":"!"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "BOOLEANO", "symbols": ["BOOLEANO$string$6"]},
-    {"name": "ESPACIO", "symbols": ["_"]}
+    {"name": "ESPACIO", "symbols": ["_"]},
+    {"name": "SALTO", "symbols": [{"literal":"\n"}]}
 ]
   , ParserStart: "cuerpo"
 }

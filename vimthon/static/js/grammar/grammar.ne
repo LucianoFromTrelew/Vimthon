@@ -38,7 +38,7 @@
     const NUMERO = (data, index, reject) => {
 
         return {
-            NUMERO:data.join("")
+            NUMERO:data.join().replace(/,/g, '')
         }
     };
 
@@ -77,7 +77,7 @@
 cuerpo -> linea:* {% cuerpo %}
 
 linea -> 
-        ESPACIO sentencia ESPACIO "\n" {% linea %}
+        ESPACIO sentencia ESPACIO SALTO {% linea %}
 
 sentencia -> asignacion
     | expresion 
@@ -90,7 +90,7 @@ asignacion -> VARIABLE ESPACIO "=" ESPACIO expresion {% asignacion %}
 expresion -> 
         operacion
     |   NUMERO {% expresion %}
-    |   VARIABLE {% expresion %}
+    |   VARIABLE {% VARIABLE %}
 
 operacion -> 
         aritmetica 
@@ -100,8 +100,7 @@ aritmetica -> expresion ESPACIO ARITMETICO ESPACIO expresion {% operacion %}
 booleana -> expresion ESPACIO BOOLEANO ESPACIO expresion {% operacion %}
 
 NUMERO -> [0-9]:+ {% NUMERO %}
-
-VARIABLE -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% VARIABLE %}
+VARIABLE -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% VARIABLE %} 
 
 ARITMETICO ->
         "+"
@@ -120,3 +119,5 @@ BOOLEANO ->
     |   "!="
 
 ESPACIO -> _ 
+
+SALTO -> "\n"
