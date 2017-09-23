@@ -49,18 +49,17 @@ function update() {
   function wrapper(){
 
     var texto = $('#code_editor').html()
-    .replace(/<div>/g,'\n').replace(/<\/div>/g,'')
-    .replace(/<br>/g,'')
+    .replace(/<br>/g,'\n')
     .replace(/<code>/g,'').replace(/<\/code>/g,'')
     // .replace(/&lt;/g, '<')+'\n'
 
     console.log(texto)
-    p.feed(texto)
+    // p.feed(texto)
 
-    console.log(p.results)
+    // console.log(p.results)
 
+    // console.log(JSON.stringify(p.results, null, 2))
     // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
-    console.log(JSON.stringify(p.results, null, 2))
   
 
     // var keys = Object.keys(texto)
