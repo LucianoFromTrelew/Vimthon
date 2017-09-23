@@ -35,17 +35,17 @@
         }
     };
 
-    const numero = (data, index, reject) => {
+    const NUMERO = (data, index, reject) => {
 
         return {
-            numero:data.join("")
+            NUMERO:data.join("")
         }
     };
 
-    const variable = (data, index, reject) => {
+    const VARIABLE = (data, index, reject) => {
 
         return {
-            variable:data.join().replace(/,/g, ''),
+            VARIABLE:data.join().replace(/,/g, ''),
         }
     };
 
@@ -86,31 +86,31 @@ sentencia -> asignacion
 
 bucle -> "while" ESPACIO expresion ":" {% bucle %}
 
-asignacion -> variable ESPACIO "=" ESPACIO expresion {% asignacion %}
+asignacion -> VARIABLE ESPACIO "=" ESPACIO expresion {% asignacion %}
 
 expresion -> 
         operacion
-    |   numero {% expresion %}
-    |   variable {% expresion %}
+    |   NUMERO {% expresion %}
+    |   VARIABLE {% expresion %}
 
 operacion -> 
         aritmetica 
     |   booleana    
     
-aritmetica -> expresion ESPACIO aritmetico ESPACIO expresion {% operacion %}
-booleana -> expresion ESPACIO booleano ESPACIO expresion {% operacion %}
+aritmetica -> expresion ESPACIO ARITMETICO ESPACIO expresion {% operacion %}
+booleana -> expresion ESPACIO BOOLEANO ESPACIO expresion {% operacion %}
 
-numero -> [0-9]:+ {% numero %}
+NUMERO -> [0-9]:+ {% NUMERO %}
 
-variable -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% variable %}
+VARIABLE -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% VARIABLE %}
 
-aritmetico ->
+ARITMETICO ->
         "+"
     |   "-"
     |   "*"
     |   "/" 
 
-booleano ->
+BOOLEANO ->
         "and"
     |   "or"
     |   ">"
