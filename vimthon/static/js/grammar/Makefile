@@ -9,4 +9,4 @@ build:
 	nearleyc $(GRAMMAR) -o $(JS)
 
 test:
-	nearley-test -i $(TEST_STRING) $(JS) > $(OUT)
+	nearley-test -i $(TEST_STRING) $(JS) -o $(OUT)

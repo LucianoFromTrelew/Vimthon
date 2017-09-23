@@ -117,8 +117,6 @@ numero -> [0-9]:+ {% numero %}
 
 variable -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% variable %}
 
-operador -> aritmetico | booleano
-
 aritmetico ->
         "+"
     |   "-"
