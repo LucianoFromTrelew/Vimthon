@@ -1,5 +1,6 @@
 // Document ready stuff
-var codigo = '#editor'
+const codigo = '#editor'
+
 $(document).ready(function(){
     // cuando submiteo el form
     $('#text_form').submit(function(event){
@@ -16,8 +17,7 @@ $(document).ready(function(){
        });
     });
 
-    var actualizar = update()
-    $(codigo).bind('DOMSubtreeModified', actualizar);
+    $(codigo).bind('DOMSubtreeModified', update);
 
 });
 
@@ -42,37 +42,32 @@ function spanner(color){
 
 
 function update() {
-  // var miembros = [
-  //   {"variable"}
-  // ]
-  function wrapper(){
+  var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
+  var texto = $(codigo).html().replace(/<br>/g,'')
+  .replace(/<div>/g,'\n').replace(/<\/div>/g, '')
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  //.replace(/<code>/g,'').replace(/<\/code>/g,'')
 
-    var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
-    var texto = $(codigo).html().replace(/<br>/g,'').replace(/<div>/g,'\n').replace(/<\/div>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    //.replace(/<code>/g,'').replace(/<\/code>/g,'')
-    // .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-
-    console.log(texto)
-    p.feed(texto)
-
-    console.log(p.results)
-
-    // console.log(JSON.stringify(p.results, null, 2))
-    // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
+  console.log(texto)
+  p.feed(texto)
   
+  var resultados = p.results[0]
+  console.log(resultados)
+  // console.log(resultados.cuerpo)
+  // console.log(JSON.stringify(p.results, null, 2))
+  // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
 
-    // var keys = Object.keys(texto)
-    // for (var index = 0; index < keys.length; index++) {
-    //   console.log(keys[index])
-    // }
 
-    // for (var k in keys) {
-    //   console.log(keys[k])
-    // }
-    // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
-    // console.log(texto)
-  }
-  return wrapper
+  // var keys = Object.keys(texto)
+  // for (var index = 0; index < keys.length; index++) {
+  //   console.log(keys[index])
+  // }
+
+  // for (var k in keys) {
+  //   console.log(keys[k])
+  // }
+  // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
+  // console.log(texto)
 } 
 
 

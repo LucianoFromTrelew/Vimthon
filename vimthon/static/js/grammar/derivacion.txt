@@ -7,7 +7,7 @@ Chart: 0
 2: {cuerpo$ebnf$1 →  ● cuerpo$ebnf$1 linea}, from: 0
 3: {cuerpo → cuerpo$ebnf$1 ● }, from: 0
 4: {cuerpo$ebnf$1 → cuerpo$ebnf$1 ● linea}, from: 0
-5: {linea →  ● ESPACIO sentencia ESPACIO "\n"}, from: 0
+5: {linea →  ● ESPACIO sentencia ESPACIO SALTO}, from: 0
 6: {ESPACIO →  ● _}, from: 0
 7: {_ →  ● _$ebnf$1}, from: 0
 8: {_$ebnf$1 →  ● }, from: 0
@@ -16,7 +16,7 @@ Chart: 0
 11: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 0
 12: {ESPACIO → _ ● }, from: 0
 13: {wschar →  ● /[ \t\n\v\f]/}, from: 0
-14: {linea → ESPACIO ● sentencia ESPACIO "\n"}, from: 0
+14: {linea → ESPACIO ● sentencia ESPACIO SALTO}, from: 0
 15: {sentencia →  ● asignacion}, from: 0
 16: {sentencia →  ● expresion}, from: 0
 17: {sentencia →  ● bucle}, from: 0
@@ -47,7 +47,7 @@ Chart: 1
 8: {aritmetica → expresion ● ESPACIO ARITMETICO ESPACIO expresion}, from: 0
 9: {sentencia → expresion ● }, from: 0
 10: {ESPACIO →  ● _}, from: 1
-11: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+11: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 12: {_ →  ● _$ebnf$1}, from: 1
 13: {_$ebnf$1 →  ● }, from: 1
 14: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 1
@@ -55,28 +55,29 @@ Chart: 1
 16: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 1
 17: {ESPACIO → _ ● }, from: 1
 18: {wschar →  ● /[ \t\n\v\f]/}, from: 1
-19: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+19: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 20: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 0
 21: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 0
 22: {asignacion → VARIABLE ESPACIO ● "=" ESPACIO expresion}, from: 0
-23: {ARITMETICO →  ● "+"}, from: 1
-24: {ARITMETICO →  ● "-"}, from: 1
-25: {ARITMETICO →  ● "*"}, from: 1
-26: {ARITMETICO →  ● "/"}, from: 1
-27: {BOOLEANO →  ● BOOLEANO$string$1}, from: 1
-28: {BOOLEANO →  ● BOOLEANO$string$2}, from: 1
-29: {BOOLEANO →  ● ">"}, from: 1
-30: {BOOLEANO →  ● "<"}, from: 1
-31: {BOOLEANO →  ● BOOLEANO$string$3}, from: 1
-32: {BOOLEANO →  ● BOOLEANO$string$4}, from: 1
-33: {BOOLEANO →  ● BOOLEANO$string$5}, from: 1
-34: {BOOLEANO →  ● BOOLEANO$string$6}, from: 1
-35: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 1
-36: {BOOLEANO$string$2 →  ● "o" "r"}, from: 1
-37: {BOOLEANO$string$3 →  ● ">" "="}, from: 1
-38: {BOOLEANO$string$4 →  ● "<" "="}, from: 1
-39: {BOOLEANO$string$5 →  ● "=" "="}, from: 1
-40: {BOOLEANO$string$6 →  ● "!" "="}, from: 1
+23: {SALTO →  ● "\n"}, from: 1
+24: {ARITMETICO →  ● "+"}, from: 1
+25: {ARITMETICO →  ● "-"}, from: 1
+26: {ARITMETICO →  ● "*"}, from: 1
+27: {ARITMETICO →  ● "/"}, from: 1
+28: {BOOLEANO →  ● BOOLEANO$string$1}, from: 1
+29: {BOOLEANO →  ● BOOLEANO$string$2}, from: 1
+30: {BOOLEANO →  ● ">"}, from: 1
+31: {BOOLEANO →  ● "<"}, from: 1
+32: {BOOLEANO →  ● BOOLEANO$string$3}, from: 1
+33: {BOOLEANO →  ● BOOLEANO$string$4}, from: 1
+34: {BOOLEANO →  ● BOOLEANO$string$5}, from: 1
+35: {BOOLEANO →  ● BOOLEANO$string$6}, from: 1
+36: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 1
+37: {BOOLEANO$string$2 →  ● "o" "r"}, from: 1
+38: {BOOLEANO$string$3 →  ● ">" "="}, from: 1
+39: {BOOLEANO$string$4 →  ● "<" "="}, from: 1
+40: {BOOLEANO$string$5 →  ● "=" "="}, from: 1
+41: {BOOLEANO$string$6 →  ● "!" "="}, from: 1
 
 Chart: 2
 0: {VARIABLE$ebnf$1 → VARIABLE$ebnf$1 /[_a-zA-Z0-9-]/ ● }, from: 1
@@ -88,7 +89,7 @@ Chart: 2
 6: {aritmetica → expresion ● ESPACIO ARITMETICO ESPACIO expresion}, from: 0
 7: {sentencia → expresion ● }, from: 0
 8: {ESPACIO →  ● _}, from: 2
-9: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+9: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 10: {_ →  ● _$ebnf$1}, from: 2
 11: {_$ebnf$1 →  ● }, from: 2
 12: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 2
@@ -96,28 +97,29 @@ Chart: 2
 14: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 2
 15: {ESPACIO → _ ● }, from: 2
 16: {wschar →  ● /[ \t\n\v\f]/}, from: 2
-17: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+17: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 18: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 0
 19: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 0
 20: {asignacion → VARIABLE ESPACIO ● "=" ESPACIO expresion}, from: 0
-21: {ARITMETICO →  ● "+"}, from: 2
-22: {ARITMETICO →  ● "-"}, from: 2
-23: {ARITMETICO →  ● "*"}, from: 2
-24: {ARITMETICO →  ● "/"}, from: 2
-25: {BOOLEANO →  ● BOOLEANO$string$1}, from: 2
-26: {BOOLEANO →  ● BOOLEANO$string$2}, from: 2
-27: {BOOLEANO →  ● ">"}, from: 2
-28: {BOOLEANO →  ● "<"}, from: 2
-29: {BOOLEANO →  ● BOOLEANO$string$3}, from: 2
-30: {BOOLEANO →  ● BOOLEANO$string$4}, from: 2
-31: {BOOLEANO →  ● BOOLEANO$string$5}, from: 2
-32: {BOOLEANO →  ● BOOLEANO$string$6}, from: 2
-33: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 2
-34: {BOOLEANO$string$2 →  ● "o" "r"}, from: 2
-35: {BOOLEANO$string$3 →  ● ">" "="}, from: 2
-36: {BOOLEANO$string$4 →  ● "<" "="}, from: 2
-37: {BOOLEANO$string$5 →  ● "=" "="}, from: 2
-38: {BOOLEANO$string$6 →  ● "!" "="}, from: 2
+21: {SALTO →  ● "\n"}, from: 2
+22: {ARITMETICO →  ● "+"}, from: 2
+23: {ARITMETICO →  ● "-"}, from: 2
+24: {ARITMETICO →  ● "*"}, from: 2
+25: {ARITMETICO →  ● "/"}, from: 2
+26: {BOOLEANO →  ● BOOLEANO$string$1}, from: 2
+27: {BOOLEANO →  ● BOOLEANO$string$2}, from: 2
+28: {BOOLEANO →  ● ">"}, from: 2
+29: {BOOLEANO →  ● "<"}, from: 2
+30: {BOOLEANO →  ● BOOLEANO$string$3}, from: 2
+31: {BOOLEANO →  ● BOOLEANO$string$4}, from: 2
+32: {BOOLEANO →  ● BOOLEANO$string$5}, from: 2
+33: {BOOLEANO →  ● BOOLEANO$string$6}, from: 2
+34: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 2
+35: {BOOLEANO$string$2 →  ● "o" "r"}, from: 2
+36: {BOOLEANO$string$3 →  ● ">" "="}, from: 2
+37: {BOOLEANO$string$4 →  ● "<" "="}, from: 2
+38: {BOOLEANO$string$5 →  ● "=" "="}, from: 2
+39: {BOOLEANO$string$6 →  ● "!" "="}, from: 2
 
 Chart: 3
 0: {VARIABLE$ebnf$1 → VARIABLE$ebnf$1 /[_a-zA-Z0-9-]/ ● }, from: 1
@@ -129,7 +131,7 @@ Chart: 3
 6: {aritmetica → expresion ● ESPACIO ARITMETICO ESPACIO expresion}, from: 0
 7: {sentencia → expresion ● }, from: 0
 8: {ESPACIO →  ● _}, from: 3
-9: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+9: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 10: {_ →  ● _$ebnf$1}, from: 3
 11: {_$ebnf$1 →  ● }, from: 3
 12: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 3
@@ -137,28 +139,29 @@ Chart: 3
 14: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 3
 15: {ESPACIO → _ ● }, from: 3
 16: {wschar →  ● /[ \t\n\v\f]/}, from: 3
-17: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+17: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 18: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 0
 19: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 0
 20: {asignacion → VARIABLE ESPACIO ● "=" ESPACIO expresion}, from: 0
-21: {ARITMETICO →  ● "+"}, from: 3
-22: {ARITMETICO →  ● "-"}, from: 3
-23: {ARITMETICO →  ● "*"}, from: 3
-24: {ARITMETICO →  ● "/"}, from: 3
-25: {BOOLEANO →  ● BOOLEANO$string$1}, from: 3
-26: {BOOLEANO →  ● BOOLEANO$string$2}, from: 3
-27: {BOOLEANO →  ● ">"}, from: 3
-28: {BOOLEANO →  ● "<"}, from: 3
-29: {BOOLEANO →  ● BOOLEANO$string$3}, from: 3
-30: {BOOLEANO →  ● BOOLEANO$string$4}, from: 3
-31: {BOOLEANO →  ● BOOLEANO$string$5}, from: 3
-32: {BOOLEANO →  ● BOOLEANO$string$6}, from: 3
-33: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 3
-34: {BOOLEANO$string$2 →  ● "o" "r"}, from: 3
-35: {BOOLEANO$string$3 →  ● ">" "="}, from: 3
-36: {BOOLEANO$string$4 →  ● "<" "="}, from: 3
-37: {BOOLEANO$string$5 →  ● "=" "="}, from: 3
-38: {BOOLEANO$string$6 →  ● "!" "="}, from: 3
+21: {SALTO →  ● "\n"}, from: 3
+22: {ARITMETICO →  ● "+"}, from: 3
+23: {ARITMETICO →  ● "-"}, from: 3
+24: {ARITMETICO →  ● "*"}, from: 3
+25: {ARITMETICO →  ● "/"}, from: 3
+26: {BOOLEANO →  ● BOOLEANO$string$1}, from: 3
+27: {BOOLEANO →  ● BOOLEANO$string$2}, from: 3
+28: {BOOLEANO →  ● ">"}, from: 3
+29: {BOOLEANO →  ● "<"}, from: 3
+30: {BOOLEANO →  ● BOOLEANO$string$3}, from: 3
+31: {BOOLEANO →  ● BOOLEANO$string$4}, from: 3
+32: {BOOLEANO →  ● BOOLEANO$string$5}, from: 3
+33: {BOOLEANO →  ● BOOLEANO$string$6}, from: 3
+34: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 3
+35: {BOOLEANO$string$2 →  ● "o" "r"}, from: 3
+36: {BOOLEANO$string$3 →  ● ">" "="}, from: 3
+37: {BOOLEANO$string$4 →  ● "<" "="}, from: 3
+38: {BOOLEANO$string$5 →  ● "=" "="}, from: 3
+39: {BOOLEANO$string$6 →  ● "!" "="}, from: 3
 
 Chart: 4
 0: {wschar → /[ \t\n\v\f]/ ● }, from: 3
@@ -167,28 +170,29 @@ Chart: 4
 3: {_ → _$ebnf$1 ● }, from: 3
 4: {wschar →  ● /[ \t\n\v\f]/}, from: 4
 5: {ESPACIO → _ ● }, from: 3
-6: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+6: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 7: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 0
 8: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 0
 9: {asignacion → VARIABLE ESPACIO ● "=" ESPACIO expresion}, from: 0
-10: {ARITMETICO →  ● "+"}, from: 4
-11: {ARITMETICO →  ● "-"}, from: 4
-12: {ARITMETICO →  ● "*"}, from: 4
-13: {ARITMETICO →  ● "/"}, from: 4
-14: {BOOLEANO →  ● BOOLEANO$string$1}, from: 4
-15: {BOOLEANO →  ● BOOLEANO$string$2}, from: 4
-16: {BOOLEANO →  ● ">"}, from: 4
-17: {BOOLEANO →  ● "<"}, from: 4
-18: {BOOLEANO →  ● BOOLEANO$string$3}, from: 4
-19: {BOOLEANO →  ● BOOLEANO$string$4}, from: 4
-20: {BOOLEANO →  ● BOOLEANO$string$5}, from: 4
-21: {BOOLEANO →  ● BOOLEANO$string$6}, from: 4
-22: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 4
-23: {BOOLEANO$string$2 →  ● "o" "r"}, from: 4
-24: {BOOLEANO$string$3 →  ● ">" "="}, from: 4
-25: {BOOLEANO$string$4 →  ● "<" "="}, from: 4
-26: {BOOLEANO$string$5 →  ● "=" "="}, from: 4
-27: {BOOLEANO$string$6 →  ● "!" "="}, from: 4
+10: {SALTO →  ● "\n"}, from: 4
+11: {ARITMETICO →  ● "+"}, from: 4
+12: {ARITMETICO →  ● "-"}, from: 4
+13: {ARITMETICO →  ● "*"}, from: 4
+14: {ARITMETICO →  ● "/"}, from: 4
+15: {BOOLEANO →  ● BOOLEANO$string$1}, from: 4
+16: {BOOLEANO →  ● BOOLEANO$string$2}, from: 4
+17: {BOOLEANO →  ● ">"}, from: 4
+18: {BOOLEANO →  ● "<"}, from: 4
+19: {BOOLEANO →  ● BOOLEANO$string$3}, from: 4
+20: {BOOLEANO →  ● BOOLEANO$string$4}, from: 4
+21: {BOOLEANO →  ● BOOLEANO$string$5}, from: 4
+22: {BOOLEANO →  ● BOOLEANO$string$6}, from: 4
+23: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 4
+24: {BOOLEANO$string$2 →  ● "o" "r"}, from: 4
+25: {BOOLEANO$string$3 →  ● ">" "="}, from: 4
+26: {BOOLEANO$string$4 →  ● "<" "="}, from: 4
+27: {BOOLEANO$string$5 →  ● "=" "="}, from: 4
+28: {BOOLEANO$string$6 →  ● "!" "="}, from: 4
 
 Chart: 5
 0: {BOOLEANO$string$5 → "=" ● "="}, from: 4
@@ -245,34 +249,35 @@ Chart: 7
 7: {ESPACIO →  ● _}, from: 7
 8: {sentencia → asignacion ● }, from: 0
 9: {_ →  ● _$ebnf$1}, from: 7
-10: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+10: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 11: {_$ebnf$1 →  ● }, from: 7
 12: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 7
 13: {_ → _$ebnf$1 ● }, from: 7
 14: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 7
 15: {ESPACIO → _ ● }, from: 7
 16: {wschar →  ● /[ \t\n\v\f]/}, from: 7
-17: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+17: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 18: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 19: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
-20: {ARITMETICO →  ● "+"}, from: 7
-21: {ARITMETICO →  ● "-"}, from: 7
-22: {ARITMETICO →  ● "*"}, from: 7
-23: {ARITMETICO →  ● "/"}, from: 7
-24: {BOOLEANO →  ● BOOLEANO$string$1}, from: 7
-25: {BOOLEANO →  ● BOOLEANO$string$2}, from: 7
-26: {BOOLEANO →  ● ">"}, from: 7
-27: {BOOLEANO →  ● "<"}, from: 7
-28: {BOOLEANO →  ● BOOLEANO$string$3}, from: 7
-29: {BOOLEANO →  ● BOOLEANO$string$4}, from: 7
-30: {BOOLEANO →  ● BOOLEANO$string$5}, from: 7
-31: {BOOLEANO →  ● BOOLEANO$string$6}, from: 7
-32: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 7
-33: {BOOLEANO$string$2 →  ● "o" "r"}, from: 7
-34: {BOOLEANO$string$3 →  ● ">" "="}, from: 7
-35: {BOOLEANO$string$4 →  ● "<" "="}, from: 7
-36: {BOOLEANO$string$5 →  ● "=" "="}, from: 7
-37: {BOOLEANO$string$6 →  ● "!" "="}, from: 7
+20: {SALTO →  ● "\n"}, from: 7
+21: {ARITMETICO →  ● "+"}, from: 7
+22: {ARITMETICO →  ● "-"}, from: 7
+23: {ARITMETICO →  ● "*"}, from: 7
+24: {ARITMETICO →  ● "/"}, from: 7
+25: {BOOLEANO →  ● BOOLEANO$string$1}, from: 7
+26: {BOOLEANO →  ● BOOLEANO$string$2}, from: 7
+27: {BOOLEANO →  ● ">"}, from: 7
+28: {BOOLEANO →  ● "<"}, from: 7
+29: {BOOLEANO →  ● BOOLEANO$string$3}, from: 7
+30: {BOOLEANO →  ● BOOLEANO$string$4}, from: 7
+31: {BOOLEANO →  ● BOOLEANO$string$5}, from: 7
+32: {BOOLEANO →  ● BOOLEANO$string$6}, from: 7
+33: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 7
+34: {BOOLEANO$string$2 →  ● "o" "r"}, from: 7
+35: {BOOLEANO$string$3 →  ● ">" "="}, from: 7
+36: {BOOLEANO$string$4 →  ● "<" "="}, from: 7
+37: {BOOLEANO$string$5 →  ● "=" "="}, from: 7
+38: {BOOLEANO$string$6 →  ● "!" "="}, from: 7
 
 Chart: 8
 0: {NUMERO$ebnf$1 → NUMERO$ebnf$1 /[0-9]/ ● }, from: 6
@@ -285,34 +290,35 @@ Chart: 8
 7: {ESPACIO →  ● _}, from: 8
 8: {sentencia → asignacion ● }, from: 0
 9: {_ →  ● _$ebnf$1}, from: 8
-10: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+10: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 11: {_$ebnf$1 →  ● }, from: 8
 12: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 8
 13: {_ → _$ebnf$1 ● }, from: 8
 14: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 8
 15: {ESPACIO → _ ● }, from: 8
 16: {wschar →  ● /[ \t\n\v\f]/}, from: 8
-17: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+17: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 18: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 19: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
-20: {ARITMETICO →  ● "+"}, from: 8
-21: {ARITMETICO →  ● "-"}, from: 8
-22: {ARITMETICO →  ● "*"}, from: 8
-23: {ARITMETICO →  ● "/"}, from: 8
-24: {BOOLEANO →  ● BOOLEANO$string$1}, from: 8
-25: {BOOLEANO →  ● BOOLEANO$string$2}, from: 8
-26: {BOOLEANO →  ● ">"}, from: 8
-27: {BOOLEANO →  ● "<"}, from: 8
-28: {BOOLEANO →  ● BOOLEANO$string$3}, from: 8
-29: {BOOLEANO →  ● BOOLEANO$string$4}, from: 8
-30: {BOOLEANO →  ● BOOLEANO$string$5}, from: 8
-31: {BOOLEANO →  ● BOOLEANO$string$6}, from: 8
-32: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 8
-33: {BOOLEANO$string$2 →  ● "o" "r"}, from: 8
-34: {BOOLEANO$string$3 →  ● ">" "="}, from: 8
-35: {BOOLEANO$string$4 →  ● "<" "="}, from: 8
-36: {BOOLEANO$string$5 →  ● "=" "="}, from: 8
-37: {BOOLEANO$string$6 →  ● "!" "="}, from: 8
+20: {SALTO →  ● "\n"}, from: 8
+21: {ARITMETICO →  ● "+"}, from: 8
+22: {ARITMETICO →  ● "-"}, from: 8
+23: {ARITMETICO →  ● "*"}, from: 8
+24: {ARITMETICO →  ● "/"}, from: 8
+25: {BOOLEANO →  ● BOOLEANO$string$1}, from: 8
+26: {BOOLEANO →  ● BOOLEANO$string$2}, from: 8
+27: {BOOLEANO →  ● ">"}, from: 8
+28: {BOOLEANO →  ● "<"}, from: 8
+29: {BOOLEANO →  ● BOOLEANO$string$3}, from: 8
+30: {BOOLEANO →  ● BOOLEANO$string$4}, from: 8
+31: {BOOLEANO →  ● BOOLEANO$string$5}, from: 8
+32: {BOOLEANO →  ● BOOLEANO$string$6}, from: 8
+33: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 8
+34: {BOOLEANO$string$2 →  ● "o" "r"}, from: 8
+35: {BOOLEANO$string$3 →  ● ">" "="}, from: 8
+36: {BOOLEANO$string$4 →  ● "<" "="}, from: 8
+37: {BOOLEANO$string$5 →  ● "=" "="}, from: 8
+38: {BOOLEANO$string$6 →  ● "!" "="}, from: 8
 
 Chart: 9
 0: {NUMERO$ebnf$1 → NUMERO$ebnf$1 /[0-9]/ ● }, from: 6
@@ -325,34 +331,35 @@ Chart: 9
 7: {ESPACIO →  ● _}, from: 9
 8: {sentencia → asignacion ● }, from: 0
 9: {_ →  ● _$ebnf$1}, from: 9
-10: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+10: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 11: {_$ebnf$1 →  ● }, from: 9
 12: {_$ebnf$1 →  ● _$ebnf$1 wschar}, from: 9
 13: {_ → _$ebnf$1 ● }, from: 9
 14: {_$ebnf$1 → _$ebnf$1 ● wschar}, from: 9
 15: {ESPACIO → _ ● }, from: 9
 16: {wschar →  ● /[ \t\n\v\f]/}, from: 9
-17: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+17: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 18: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 19: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
-20: {ARITMETICO →  ● "+"}, from: 9
-21: {ARITMETICO →  ● "-"}, from: 9
-22: {ARITMETICO →  ● "*"}, from: 9
-23: {ARITMETICO →  ● "/"}, from: 9
-24: {BOOLEANO →  ● BOOLEANO$string$1}, from: 9
-25: {BOOLEANO →  ● BOOLEANO$string$2}, from: 9
-26: {BOOLEANO →  ● ">"}, from: 9
-27: {BOOLEANO →  ● "<"}, from: 9
-28: {BOOLEANO →  ● BOOLEANO$string$3}, from: 9
-29: {BOOLEANO →  ● BOOLEANO$string$4}, from: 9
-30: {BOOLEANO →  ● BOOLEANO$string$5}, from: 9
-31: {BOOLEANO →  ● BOOLEANO$string$6}, from: 9
-32: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 9
-33: {BOOLEANO$string$2 →  ● "o" "r"}, from: 9
-34: {BOOLEANO$string$3 →  ● ">" "="}, from: 9
-35: {BOOLEANO$string$4 →  ● "<" "="}, from: 9
-36: {BOOLEANO$string$5 →  ● "=" "="}, from: 9
-37: {BOOLEANO$string$6 →  ● "!" "="}, from: 9
+20: {SALTO →  ● "\n"}, from: 9
+21: {ARITMETICO →  ● "+"}, from: 9
+22: {ARITMETICO →  ● "-"}, from: 9
+23: {ARITMETICO →  ● "*"}, from: 9
+24: {ARITMETICO →  ● "/"}, from: 9
+25: {BOOLEANO →  ● BOOLEANO$string$1}, from: 9
+26: {BOOLEANO →  ● BOOLEANO$string$2}, from: 9
+27: {BOOLEANO →  ● ">"}, from: 9
+28: {BOOLEANO →  ● "<"}, from: 9
+29: {BOOLEANO →  ● BOOLEANO$string$3}, from: 9
+30: {BOOLEANO →  ● BOOLEANO$string$4}, from: 9
+31: {BOOLEANO →  ● BOOLEANO$string$5}, from: 9
+32: {BOOLEANO →  ● BOOLEANO$string$6}, from: 9
+33: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 9
+34: {BOOLEANO$string$2 →  ● "o" "r"}, from: 9
+35: {BOOLEANO$string$3 →  ● ">" "="}, from: 9
+36: {BOOLEANO$string$4 →  ● "<" "="}, from: 9
+37: {BOOLEANO$string$5 →  ● "=" "="}, from: 9
+38: {BOOLEANO$string$6 →  ● "!" "="}, from: 9
 
 Chart: 10
 0: {wschar → /[ \t\n\v\f]/ ● }, from: 9
@@ -361,27 +368,28 @@ Chart: 10
 3: {_ → _$ebnf$1 ● }, from: 9
 4: {wschar →  ● /[ \t\n\v\f]/}, from: 10
 5: {ESPACIO → _ ● }, from: 9
-6: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+6: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 7: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 8: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
-9: {ARITMETICO →  ● "+"}, from: 10
-10: {ARITMETICO →  ● "-"}, from: 10
-11: {ARITMETICO →  ● "*"}, from: 10
-12: {ARITMETICO →  ● "/"}, from: 10
-13: {BOOLEANO →  ● BOOLEANO$string$1}, from: 10
-14: {BOOLEANO →  ● BOOLEANO$string$2}, from: 10
-15: {BOOLEANO →  ● ">"}, from: 10
-16: {BOOLEANO →  ● "<"}, from: 10
-17: {BOOLEANO →  ● BOOLEANO$string$3}, from: 10
-18: {BOOLEANO →  ● BOOLEANO$string$4}, from: 10
-19: {BOOLEANO →  ● BOOLEANO$string$5}, from: 10
-20: {BOOLEANO →  ● BOOLEANO$string$6}, from: 10
-21: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 10
-22: {BOOLEANO$string$2 →  ● "o" "r"}, from: 10
-23: {BOOLEANO$string$3 →  ● ">" "="}, from: 10
-24: {BOOLEANO$string$4 →  ● "<" "="}, from: 10
-25: {BOOLEANO$string$5 →  ● "=" "="}, from: 10
-26: {BOOLEANO$string$6 →  ● "!" "="}, from: 10
+9: {SALTO →  ● "\n"}, from: 10
+10: {ARITMETICO →  ● "+"}, from: 10
+11: {ARITMETICO →  ● "-"}, from: 10
+12: {ARITMETICO →  ● "*"}, from: 10
+13: {ARITMETICO →  ● "/"}, from: 10
+14: {BOOLEANO →  ● BOOLEANO$string$1}, from: 10
+15: {BOOLEANO →  ● BOOLEANO$string$2}, from: 10
+16: {BOOLEANO →  ● ">"}, from: 10
+17: {BOOLEANO →  ● "<"}, from: 10
+18: {BOOLEANO →  ● BOOLEANO$string$3}, from: 10
+19: {BOOLEANO →  ● BOOLEANO$string$4}, from: 10
+20: {BOOLEANO →  ● BOOLEANO$string$5}, from: 10
+21: {BOOLEANO →  ● BOOLEANO$string$6}, from: 10
+22: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 10
+23: {BOOLEANO$string$2 →  ● "o" "r"}, from: 10
+24: {BOOLEANO$string$3 →  ● ">" "="}, from: 10
+25: {BOOLEANO$string$4 →  ● "<" "="}, from: 10
+26: {BOOLEANO$string$5 →  ● "=" "="}, from: 10
+27: {BOOLEANO$string$6 →  ● "!" "="}, from: 10
 
 Chart: 11
 0: {ARITMETICO → "+" ● }, from: 10
@@ -449,12 +457,12 @@ Chart: 13
 18: {sentencia → asignacion ● }, from: 0
 19: {ESPACIO → _ ● }, from: 13
 20: {wschar →  ● /[ \t\n\v\f]/}, from: 13
-21: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+21: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 22: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 23: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
 24: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 12
 25: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 12
-26: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+26: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 27: {ARITMETICO →  ● "+"}, from: 13
 28: {ARITMETICO →  ● "-"}, from: 13
 29: {ARITMETICO →  ● "*"}, from: 13
@@ -467,12 +475,13 @@ Chart: 13
 36: {BOOLEANO →  ● BOOLEANO$string$4}, from: 13
 37: {BOOLEANO →  ● BOOLEANO$string$5}, from: 13
 38: {BOOLEANO →  ● BOOLEANO$string$6}, from: 13
-39: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 13
-40: {BOOLEANO$string$2 →  ● "o" "r"}, from: 13
-41: {BOOLEANO$string$3 →  ● ">" "="}, from: 13
-42: {BOOLEANO$string$4 →  ● "<" "="}, from: 13
-43: {BOOLEANO$string$5 →  ● "=" "="}, from: 13
-44: {BOOLEANO$string$6 →  ● "!" "="}, from: 13
+39: {SALTO →  ● "\n"}, from: 13
+40: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 13
+41: {BOOLEANO$string$2 →  ● "o" "r"}, from: 13
+42: {BOOLEANO$string$3 →  ● ">" "="}, from: 13
+43: {BOOLEANO$string$4 →  ● "<" "="}, from: 13
+44: {BOOLEANO$string$5 →  ● "=" "="}, from: 13
+45: {BOOLEANO$string$6 →  ● "!" "="}, from: 13
 
 Chart: 14
 0: {NUMERO$ebnf$1 → NUMERO$ebnf$1 /[0-9]/ ● }, from: 12
@@ -496,12 +505,12 @@ Chart: 14
 18: {sentencia → asignacion ● }, from: 0
 19: {ESPACIO → _ ● }, from: 14
 20: {wschar →  ● /[ \t\n\v\f]/}, from: 14
-21: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+21: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 22: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 23: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
 24: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 12
 25: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 12
-26: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+26: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 27: {ARITMETICO →  ● "+"}, from: 14
 28: {ARITMETICO →  ● "-"}, from: 14
 29: {ARITMETICO →  ● "*"}, from: 14
@@ -514,12 +523,13 @@ Chart: 14
 36: {BOOLEANO →  ● BOOLEANO$string$4}, from: 14
 37: {BOOLEANO →  ● BOOLEANO$string$5}, from: 14
 38: {BOOLEANO →  ● BOOLEANO$string$6}, from: 14
-39: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 14
-40: {BOOLEANO$string$2 →  ● "o" "r"}, from: 14
-41: {BOOLEANO$string$3 →  ● ">" "="}, from: 14
-42: {BOOLEANO$string$4 →  ● "<" "="}, from: 14
-43: {BOOLEANO$string$5 →  ● "=" "="}, from: 14
-44: {BOOLEANO$string$6 →  ● "!" "="}, from: 14
+39: {SALTO →  ● "\n"}, from: 14
+40: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 14
+41: {BOOLEANO$string$2 →  ● "o" "r"}, from: 14
+42: {BOOLEANO$string$3 →  ● ">" "="}, from: 14
+43: {BOOLEANO$string$4 →  ● "<" "="}, from: 14
+44: {BOOLEANO$string$5 →  ● "=" "="}, from: 14
+45: {BOOLEANO$string$6 →  ● "!" "="}, from: 14
 
 Chart: 15
 0: {NUMERO$ebnf$1 → NUMERO$ebnf$1 /[0-9]/ ● }, from: 12
@@ -543,12 +553,12 @@ Chart: 15
 18: {sentencia → asignacion ● }, from: 0
 19: {ESPACIO → _ ● }, from: 15
 20: {wschar →  ● /[ \t\n\v\f]/}, from: 15
-21: {linea → ESPACIO sentencia ● ESPACIO "\n"}, from: 0
+21: {linea → ESPACIO sentencia ● ESPACIO SALTO}, from: 0
 22: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 6
 23: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 6
 24: {aritmetica → expresion ESPACIO ● ARITMETICO ESPACIO expresion}, from: 12
 25: {booleana → expresion ESPACIO ● BOOLEANO ESPACIO expresion}, from: 12
-26: {linea → ESPACIO sentencia ESPACIO ● "\n"}, from: 0
+26: {linea → ESPACIO sentencia ESPACIO ● SALTO}, from: 0
 27: {ARITMETICO →  ● "+"}, from: 15
 28: {ARITMETICO →  ● "-"}, from: 15
 29: {ARITMETICO →  ● "*"}, from: 15
@@ -561,12 +571,13 @@ Chart: 15
 36: {BOOLEANO →  ● BOOLEANO$string$4}, from: 15
 37: {BOOLEANO →  ● BOOLEANO$string$5}, from: 15
 38: {BOOLEANO →  ● BOOLEANO$string$6}, from: 15
-39: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 15
-40: {BOOLEANO$string$2 →  ● "o" "r"}, from: 15
-41: {BOOLEANO$string$3 →  ● ">" "="}, from: 15
-42: {BOOLEANO$string$4 →  ● "<" "="}, from: 15
-43: {BOOLEANO$string$5 →  ● "=" "="}, from: 15
-44: {BOOLEANO$string$6 →  ● "!" "="}, from: 15
+39: {SALTO →  ● "\n"}, from: 15
+40: {BOOLEANO$string$1 →  ● "a" "n" "d"}, from: 15
+41: {BOOLEANO$string$2 →  ● "o" "r"}, from: 15
+42: {BOOLEANO$string$3 →  ● ">" "="}, from: 15
+43: {BOOLEANO$string$4 →  ● "<" "="}, from: 15
+44: {BOOLEANO$string$5 →  ● "=" "="}, from: 15
+45: {BOOLEANO$string$6 →  ● "!" "="}, from: 15
 
 
 Parse results: 
