@@ -40,6 +40,46 @@ function spanner(color){
  * */
 
 
+ /*para definir las clases*
+
+ 
+ */
+
+class LineaFactory {
+  
+  var tipos_linea = ["operador", "while", "igual"]
+
+  static crear_linea(linea){
+  
+    var claves_linea = Object.keys(linea)
+
+    /* Cada tipo de linea (asignacion, bucle, expresion)
+    tiene por lo menos una clave en el JSON que obtenemos de la produccion
+    que va a ser unica (bah, todas son unicas, no hay repetidas)
+    preguntamos por alguna de esas claves, y en base a la condicion,
+    creamos un objeto de la clase correspondiente */
+
+    /**
+     * TODO: Crear la clase Linea y las subclases
+     * 
+     * LineaAsignacion
+     * LineaExpresion
+     * LineaWhile
+     * 
+     * la clase Linea va a tener un atributo que viene a ser el color
+     * y el metodo colorear() que devuelve una cadena con el texto de la linea
+     * envuelto en los spans acordemente
+     */
+    if (/operador/i.test(claves_linea)){
+      console.log("TIPO expresion")
+    }else if (/while/i.test(claves_linea)){
+      console.log("TIPO while")
+    }else{
+      console.log("TIPO asignacion")
+    }
+  }
+
+}
 
 function update() {
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
@@ -54,37 +94,29 @@ function update() {
 
   try {
     var cuerpo = p.results[0].cuerpo
-    console.log(cuerpo)
+    // console.log(cuerpo)
   } catch (error){}
   
+  texto = ""
+
   for (var l in cuerpo) {
     try {
-      console.log("LINEA: " + Object.keys(cuerpo[l].linea))
+      var linea = cuerpo[l].linea
+
+      texto.concat(LineaFactory.crear_linea(linea).colorear())
+      
+      // for (var key in Object.keys(linea)) {
+      //   console.log("CLAVE: " + Object.keys(linea)[key])
+      // }
+
+      console.log(cuerpo[l].linea)
+      // console.log("LINEA: " + cuerpo[l].linea + ". Claves: "+ Object.keys(cuerpo[l].linea))
+
     } catch (error) {
       continue
     }
 
-
-    // if (object.hasOwnProperty(linea)) {
-    //   var element = object[linea];
-    // }
-
   }
-  // console.log(resultados.cuerpo)
-  // console.log(JSON.stringify(p.results, null, 2))
-  // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";
-
-
-  // var keys = Object.keys(texto)
-  // for (var index = 0; index < keys.length; index++) {
-  //   console.log(keys[index])
-  // }
-
-  // for (var k in keys) {
-  //   console.log(keys[k])
-  // }
-  // console.log("La expresion es " + texto["expresion"][0][0]["numero"]+ texto["expresion"][0][4]["numero"])
-  // console.log(texto)
 } 
 
 
