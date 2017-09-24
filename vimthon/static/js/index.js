@@ -1,6 +1,18 @@
 // Document ready stuff
 const codigo = '#editor'
 
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 $(document).ready(function(){
     // cuando submiteo el form
     $('#text_form').submit(function(event){
@@ -23,9 +35,7 @@ $(document).ready(function(){
 
 
 
-function spanner(color){
-  return "<span style:'color: {0}'>".format(color) 
-}
+
 /*
  *  Lo que se me ocurre es armar un arreglo con los nombres de los miembros del JSON que nos devuelve la gramatica
  *  ir recorriendo el JSON con esos nombres, e ir envolviendo acorde
@@ -44,13 +54,77 @@ function spanner(color){
 
  
  */
+class Linea {
+  constructor(colores, linea){
+    this._colores = colores
+    this._linea = linea
+  }
 
+  get colores(){
+    return this._colores
+  }
+
+  get linea(){
+    return this._linea
+  }
+
+  colorear(){
+    throw "MÉTODO ABSTRACTO"
+  }
+
+  spanner(color, texto){
+    return "<span style=\"color: {0}\">{1}</span>".format(color, texto) 
+  }
+}
+
+class LineaAsignacion extends Linea {
+
+  constructor(linea){
+    var colores = ["red", "blue"]
+    super(colores, linea)
+  }
+
+  colorear(){
+    // return this.linea.izq.VARIABLE + " " + this.linea.igual + " " + this.linea.der["0"].NUMERO
+
+    return "{0} {1} {2}\n".format(
+    this.spanner(this.colores[0], this.linea.izq.VARIABLE),
+    this.linea.igual, 
+    this.spanner(this.colores[1], this.linea.der["0"].NUMERO))
+
+  }
+}
+
+class LineaExpresion extends Linea {
+
+  constructor(linea){
+    var colores = ["green", "yellow"]
+    super(colores, linea)
+  }
+
+  colorear(){
+    return "COLOREAR DENTRO DE EXPRESION"
+  }
+}
+
+class LineaWhile extends Linea {
+  
+  constructor(linea){
+    var colores = ["blue", "yellow"]
+    super(colores, linea)
+  }
+
+  colorear(){
+    return "COLOREAR DENTRO DE WHILE"
+  }
+
+}
 class LineaFactory {
-  
-  var tipos_linea = ["operador", "while", "igual"]
-
+ 
   static crear_linea(linea){
-  
+    
+    const tipos_linea = ["operador", "while", "igual"]
+    
     var claves_linea = Object.keys(linea)
 
     /* Cada tipo de linea (asignacion, bucle, expresion)
@@ -71,11 +145,14 @@ class LineaFactory {
      * envuelto en los spans acordemente
      */
     if (/operador/i.test(claves_linea)){
-      console.log("TIPO expresion")
+      // console.log("TIPO expresion")
+      return new LineaExpresion(linea)
     }else if (/while/i.test(claves_linea)){
-      console.log("TIPO while")
+      // console.log("TIPO while")
+      return new LineaWhile(linea)
     }else{
-      console.log("TIPO asignacion")
+      // console.log("TIPO asignacion")
+      return new LineaAsignacion(linea)
     }
   }
 
@@ -97,20 +174,24 @@ function update() {
     // console.log(cuerpo)
   } catch (error){}
   
-  texto = ""
-
+  // console.log(texto)
+  
   for (var l in cuerpo) {
     try {
       var linea = cuerpo[l].linea
-
-      texto.concat(LineaFactory.crear_linea(linea).colorear())
       
-      // for (var key in Object.keys(linea)) {
-      //   console.log("CLAVE: " + Object.keys(linea)[key])
-      // }
+      //recuperamos el html del code_editor
+      texto = $("#code_editor").html()
 
+      //le seteamos el nuevo texto al code_editor,
+      //que va a ser lo que ya tenia, mas lo nuevo coloreado
+      $("#code_editor")
+      .html(texto.concat(LineaFactory
+      .crear_linea(linea).colorear()))
+      
+      // texto.concat(LineaFactory.crear_linea(linea).colorear())
+      
       console.log(cuerpo[l].linea)
-      // console.log("LINEA: " + cuerpo[l].linea + ". Claves: "+ Object.keys(cuerpo[l].linea))
 
     } catch (error) {
       continue
@@ -129,27 +210,27 @@ function cursor(){
 }
 
 
-function getCaretPosition(editableDiv) {
-  var caretPos = 0,
-    sel, range;
-  if (window.getSelection) {
-    sel = window.getSelection();
-    if (sel.rangeCount) {
-      range = sel.getRangeAt(0);
-      if (range.commonAncestorContainer.parentNode == editableDiv) {
-        caretPos = range.endOffset;
-      }
-    }
-  } else if (document.selection && document.selection.createRange) {
-    range = document.selection.createRange();
-    if (range.parentElement() == editableDiv) {
-      var tempEl = document.createElement("span");
-      editableDiv.insertBefore(tempEl, editableDiv.firstChild);
-      var tempRange = range.duplicate();
-      tempRange.moveToElementText(tempEl);
-      tempRange.setEndPoint("EndToEnd", range);
-      caretPos = tempRange.text.length;
-    }
-  }
-  return caretPos;
-}
+// function getCaretPosition(editableDiv) {
+// var caretPos = 0,
+//     sel, range;
+//   if (window.getSelection) {
+//     sel = window.getSelection();
+//     if (sel.rangeCount) {
+//       range = sel.getRangeAt(0);
+//       if (range.commonAncestorContainer.parentNode == editableDiv) {
+//         caretPos = range.endOffset;
+//       }
+//     }
+//   } else if (document.selection && document.selection.createRange) {
+//     range = document.selection.createRange();
+//     if (range.parentElement() == editableDiv) {
+//       var tempEl = document.createElement("span");
+//       editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+//       var tempRange = range.duplicate();
+//       tempRange.moveToElementText(tempEl);
+//       tempRange.setEndPoint("EndToEnd", range);
+//       caretPos = tempRange.text.length;
+//     }
+//   }
+//   return caretPos;
+// }

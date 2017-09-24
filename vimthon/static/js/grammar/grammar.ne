@@ -58,16 +58,14 @@
     const bucle = (data, index, reject) => { 
         return {
             while:data[0],
-            condicion:data[2][0],
+            condicion:data[2],
             dospuntos:data[3]
-            
         }
     };
 
     const expresion = (data, index, reject) => { 
         return {
             expresion:data[0]
-
         }
     };
 %}

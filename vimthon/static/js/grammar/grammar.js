@@ -52,7 +52,7 @@ function id(x) {return x[0]; }
     const bucle = (data, index, reject) => { 
         return {
             while:data[0],
-            condicion:data[2][0],
+            condicion:data[2],
             dospuntos:data[3]
             
         }
