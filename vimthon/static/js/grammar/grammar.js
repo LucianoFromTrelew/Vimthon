@@ -54,14 +54,12 @@ function id(x) {return x[0]; }
             while:data[0],
             condicion:data[2],
             dospuntos:data[3]
-            
         }
     };
 
     const expresion = (data, index, reject) => { 
         return {
             expresion:data[0]
-
         }
     };
 var grammar = {

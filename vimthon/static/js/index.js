@@ -42,7 +42,7 @@ $(document).ready(function(){
  *
  *  La que podria ser es armar un diccionario que tenga el nombre de miembro, y el color, asi pintamos segun el miembro
  *
- *  Habría que ver cómo se pueden manejar las situaciones en las que se quiere acceder a un miembro de un objeto que no tiene dicho miembro
+ *  Habría que ver cómo s e pueden manejar las situaciones en las que se quiere acceder a un miembro de un objeto que no tiene dicho miembro
  *  Osea, cómo atajar la excepción "AttributeError"
  * 
  * 
@@ -85,8 +85,6 @@ class LineaAsignacion extends Linea {
   }
 
   colorear(){
-    // return this.linea.izq.VARIABLE + " " + this.linea.igual + " " + this.linea.der["0"].NUMERO
-
     return "{0} {1} {2}\n".format(
     this.spanner(this.colores[0], this.linea.izq.VARIABLE),
     this.linea.igual, 
@@ -98,24 +96,31 @@ class LineaAsignacion extends Linea {
 class LineaExpresion extends Linea {
 
   constructor(linea){
-    var colores = ["green", "yellow"]
+    var colores = ["green", "red"]
     super(colores, linea)
   }
 
   colorear(){
-    return "COLOREAR DENTRO DE EXPRESION"
+    return "{0} {1} {2}".format(
+      this.spanner(this.colores[0], this.linea.op_izquierdo["0"].VARIABLE),
+      this.spanner(this.colores[1], this.linea.operador["0"]), 
+      this.spanner(this.colores[0], this.linea.op_derecho["0"].NUMERO))  
   }
 }
 
 class LineaWhile extends Linea {
   
   constructor(linea){
-    var colores = ["blue", "yellow"]
+    var colores = ["blue", "red"]
     super(colores, linea)
   }
 
   colorear(){
-    return "COLOREAR DENTRO DE WHILE"
+    return "{0} {1}{2}\n".format(
+      this.spanner(this.colores[0], this.linea.while),
+      new LineaExpresion(this.linea.condicion).colorear(),
+      this.spanner(this.colores[1], this.linea.dospuntos)
+    )
   }
 
 }
@@ -145,13 +150,10 @@ class LineaFactory {
      * envuelto en los spans acordemente
      */
     if (/operador/i.test(claves_linea)){
-      // console.log("TIPO expresion")
       return new LineaExpresion(linea)
     }else if (/while/i.test(claves_linea)){
-      // console.log("TIPO while")
       return new LineaWhile(linea)
     }else{
-      // console.log("TIPO asignacion")
       return new LineaAsignacion(linea)
     }
   }
