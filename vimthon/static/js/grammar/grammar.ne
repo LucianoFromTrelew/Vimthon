@@ -21,17 +21,17 @@
     const asignacion = (data, index, reject) => {
 
         return {
-            izquierdo:data[0],
+            izq:data[0],
             igual:data[2],
-            derecho:data[4]
+            der:data[4]
         }
     };
     const operacion = (data, index, reject) => {
 
         return {
-            izquierdo:data[0],
-            operador: data[2][0][0],
-            derecho:data[4]
+            op_izquierdo:data[0][0][0],
+            operador: data[0][0][2],
+            op_derecho:data[0][0][4]
         }
     };
 
@@ -88,16 +88,16 @@ bucle -> "while" ESPACIO expresion ":" {% bucle %}
 asignacion -> VARIABLE ESPACIO "=" ESPACIO expresion {% asignacion %}
 
 expresion -> 
-        operacion
-    |   NUMERO {% expresion %}
-    |   VARIABLE {% VARIABLE %}
+        operacion {% operacion %}
+    |   NUMERO
+    |   VARIABLE
 
 operacion -> 
         aritmetica 
     |   booleana    
     
-aritmetica -> expresion ESPACIO ARITMETICO ESPACIO expresion {% operacion %}
-booleana -> expresion ESPACIO BOOLEANO ESPACIO expresion {% operacion %}
+aritmetica -> expresion ESPACIO ARITMETICO ESPACIO expresion 
+booleana -> expresion ESPACIO BOOLEANO ESPACIO expresion
 
 NUMERO -> [0-9]:+ {% NUMERO %}
 VARIABLE -> [_a-zA-Z] [_a-zA-Z0-9-]:* {% VARIABLE %} 

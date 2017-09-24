@@ -46,13 +46,30 @@ function update() {
   var texto = $(codigo).html().replace(/<br>/g,'')
   .replace(/<div>/g,'\n').replace(/<\/div>/g, '')
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  //.replace(/<code>/g,'').replace(/<\/code>/g,'')
+  .replace(/<code>/g,'').replace(/<\/code>/g,'')
+  // .replace(/<span.*>/g, '').replace(/<\/span>/g,'')
 
   console.log(texto)
   p.feed(texto)
+
+  try {
+    var cuerpo = p.results[0].cuerpo
+    console.log(cuerpo)
+  } catch (error){}
   
-  var resultados = p.results[0]
-  console.log(resultados)
+  for (var l in cuerpo) {
+    try {
+      console.log("LINEA: " + Object.keys(cuerpo[l].linea))
+    } catch (error) {
+      continue
+    }
+
+
+    // if (object.hasOwnProperty(linea)) {
+    //   var element = object[linea];
+    // }
+
+  }
   // console.log(resultados.cuerpo)
   // console.log(JSON.stringify(p.results, null, 2))
   // document.getElementById("code_editor").innerHTML = "<span style='color:tomato'>Paragraph changed!</span>";

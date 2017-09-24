@@ -15,17 +15,17 @@ function id(x) {return x[0]; }
     const asignacion = (data, index, reject) => {
 
         return {
-            izquierdo:data[0],
+            izq:data[0],
             igual:data[2],
-            derecho:data[4]
+            der:data[4]
         }
     };
     const operacion = (data, index, reject) => {
 
         return {
-            izquierdo:data[0],
-            operador: data[2][0][0],
-            derecho:data[4]
+            op_izquierdo:data[0][0][0],
+            operador: data[0][0][2],
+            op_derecho:data[0][0][4]
         }
     };
 
@@ -84,13 +84,13 @@ var grammar = {
     {"name": "bucle$string$1", "symbols": [{"literal":"w"}, {"literal":"h"}, {"literal":"i"}, {"literal":"l"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "bucle", "symbols": ["bucle$string$1", "ESPACIO", "expresion", {"literal":":"}], "postprocess": bucle},
     {"name": "asignacion", "symbols": ["VARIABLE", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
-    {"name": "expresion", "symbols": ["operacion"]},
-    {"name": "expresion", "symbols": ["NUMERO"], "postprocess": expresion},
-    {"name": "expresion", "symbols": ["VARIABLE"], "postprocess": VARIABLE},
+    {"name": "expresion", "symbols": ["operacion"], "postprocess": operacion},
+    {"name": "expresion", "symbols": ["NUMERO"]},
+    {"name": "expresion", "symbols": ["VARIABLE"]},
     {"name": "operacion", "symbols": ["aritmetica"]},
     {"name": "operacion", "symbols": ["booleana"]},
-    {"name": "aritmetica", "symbols": ["expresion", "ESPACIO", "ARITMETICO", "ESPACIO", "expresion"], "postprocess": operacion},
-    {"name": "booleana", "symbols": ["expresion", "ESPACIO", "BOOLEANO", "ESPACIO", "expresion"], "postprocess": operacion},
+    {"name": "aritmetica", "symbols": ["expresion", "ESPACIO", "ARITMETICO", "ESPACIO", "expresion"]},
+    {"name": "booleana", "symbols": ["expresion", "ESPACIO", "BOOLEANO", "ESPACIO", "expresion"]},
     {"name": "NUMERO$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "NUMERO$ebnf$1", "symbols": ["NUMERO$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "NUMERO", "symbols": ["NUMERO$ebnf$1"], "postprocess": NUMERO},
