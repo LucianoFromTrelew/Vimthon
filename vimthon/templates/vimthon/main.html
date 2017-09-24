@@ -3,20 +3,21 @@
 {% block content %}
 
 <div>
-    <div id="editor" contenteditable="true"></div>
-
+    
     <form method="POST" id="text_form" class="post-form">
         {{ form.hidden_tag() }}
-            {{ form.text }}
-            {{ form.regex }}
-            {% for error in form.regex.errors %}
-                <span style="color: red;">[{{error}}]</span>
-            {% endfor %}<br>
-
-            <pre id="code_editor" contenteditable="true" style="background:wheat"><code>    
-            </code></pre>
+        {{ form.text }}
+        {{ form.regex }}
+        {% for error in form.regex.errors %}
+        <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        
         <button id="submitBtn" type="submit" class="save btn btn-default">Send</button>
     </form>
+    <br/><br/>
+    <div id="editor" contenteditable="true"></div>
+    <pre id="code_editor" contenteditable="true" style="background:wheat"><code>    
+    </code></pre>
 </div>
 
 {% endblock %}
