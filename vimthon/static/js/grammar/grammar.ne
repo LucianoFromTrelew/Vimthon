@@ -59,7 +59,7 @@
         return {
             while:data[0],
             condicion:data[2],
-            dospuntos:data[3]
+            dospuntos:data[4]
         }
     };
 
