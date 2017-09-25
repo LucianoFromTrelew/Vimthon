@@ -48,7 +48,6 @@ class Linea {
     }
   
     colorear(){
-      console.log(this.linea)
       return "{0} {1} {2}\n".format(
       this.spanner(this.colores[0], this.linea.izq.VARIABLE),
       this.linea.igual, 

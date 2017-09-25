@@ -1,6 +1,7 @@
 // Document ready stuff
 const codigo = '#editor'
 var change = 0
+
 $(document).ready(function(){
     // cuando submiteo el form
     $('#text_form').submit(function(event){
@@ -58,13 +59,4 @@ function update() {
   } else {
     change = 0
   }
-} 
-
-
-function cursor(){
-    var start = $('#editor')[0].selectionStart;
-    console.log(start)
-    var end = $('#editor')[0].selectionEnd;
-    console.log(end)
-    return (start==end) ? start : -1;
 }
