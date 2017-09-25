@@ -20,20 +20,23 @@ Chart: 0
 15: {sentencia →  ● asignacion}, from: 0
 16: {sentencia →  ● expresion}, from: 0
 17: {sentencia →  ● bucle}, from: 0
-18: {asignacion →  ● VARIABLE ESPACIO "=" ESPACIO expresion}, from: 0
-19: {expresion →  ● operacion}, from: 0
-20: {expresion →  ● NUMERO}, from: 0
-21: {expresion →  ● VARIABLE}, from: 0
-22: {bucle →  ● bucle$string$1 ESPACIO expresion ESPACIO ":"}, from: 0
-23: {VARIABLE →  ● /[_a-zA-Z]/ VARIABLE$ebnf$1}, from: 0
-24: {operacion →  ● aritmetica}, from: 0
-25: {operacion →  ● booleana}, from: 0
-26: {NUMERO →  ● NUMERO$ebnf$1}, from: 0
-27: {bucle$string$1 →  ● "w" "h" "i" "l" "e"}, from: 0
-28: {aritmetica →  ● expresion ESPACIO ARITMETICO ESPACIO expresion}, from: 0
-29: {booleana →  ● expresion ESPACIO BOOLEANO ESPACIO expresion}, from: 0
-30: {NUMERO$ebnf$1 →  ● /[0-9]/}, from: 0
-31: {NUMERO$ebnf$1 →  ● NUMERO$ebnf$1 /[0-9]/}, from: 0
+18: {sentencia →  ● for}, from: 0
+19: {asignacion →  ● VARIABLE ESPACIO "=" ESPACIO expresion}, from: 0
+20: {expresion →  ● operacion}, from: 0
+21: {expresion →  ● NUMERO}, from: 0
+22: {expresion →  ● VARIABLE}, from: 0
+23: {bucle →  ● bucle$string$1 ESPACIO expresion ESPACIO ":"}, from: 0
+24: {for →  ● for$string$1 ESPACIO VARIABLE ESPACIO for$string$2 ESPACIO VARIABLE ESPACIO ":"}, from: 0
+25: {VARIABLE →  ● /[_a-zA-Z]/ VARIABLE$ebnf$1}, from: 0
+26: {operacion →  ● aritmetica}, from: 0
+27: {operacion →  ● booleana}, from: 0
+28: {NUMERO →  ● NUMERO$ebnf$1}, from: 0
+29: {bucle$string$1 →  ● "w" "h" "i" "l" "e"}, from: 0
+30: {for$string$1 →  ● "f" "o" "r"}, from: 0
+31: {aritmetica →  ● expresion ESPACIO ARITMETICO ESPACIO expresion}, from: 0
+32: {booleana →  ● expresion ESPACIO BOOLEANO ESPACIO expresion}, from: 0
+33: {NUMERO$ebnf$1 →  ● /[0-9]/}, from: 0
+34: {NUMERO$ebnf$1 →  ● NUMERO$ebnf$1 /[0-9]/}, from: 0
 
 Chart: 1
 0: {VARIABLE → /[_a-zA-Z]/ ● VARIABLE$ebnf$1}, from: 0

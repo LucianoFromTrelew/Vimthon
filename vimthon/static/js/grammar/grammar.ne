@@ -63,11 +63,22 @@
         }
     };
 
+    const bucleFor = (data, index, reject) => { 
+        return {
+            for:data[0],
+            variable:data[2],
+            in:data[4],
+            iterable:data[6],
+            dospuntos:data[8]
+        }
+    };
+
     const expresion = (data, index, reject) => { 
         return {
             expresion:data[0]
         }
     };
+
 %}
 
 # las funciones de postprocesamiento de definen a parte para que quede mas prolijo el asunto
@@ -80,8 +91,12 @@ linea ->
 sentencia -> asignacion
     | expresion 
     | bucle
+    | for
+
 
 bucle -> "while" ESPACIO expresion ESPACIO ":" {% bucle %}
+
+for -> "for" ESPACIO VARIABLE ESPACIO "in" ESPACIO VARIABLE ESPACIO ":" {% bucleFor %}
 
 asignacion -> VARIABLE ESPACIO "=" ESPACIO expresion {% asignacion %}
 

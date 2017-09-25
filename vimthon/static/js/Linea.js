@@ -38,6 +38,10 @@ class Linea {
     spanner(color, texto){
       return "<span style=\"color: {0}\">{1}</span>".format(color, texto) 
     }
+
+    get grafico(){
+      throw "METODO ABSTRACTO"
+    }
   }
   
   class LineaAsignacion extends Linea {
@@ -53,6 +57,48 @@ class Linea {
       this.linea.igual, 
       this.spanner(this.colores[1], this.linea.der["0"].NUMERO))
     }
+
+    get grafico(){
+      return {
+        name:"Asignación",
+        children:[
+          // izquierdo
+          {
+            name:"Izquierdo",
+            children:[
+              {
+                name:"VARIABLE",
+                children:[
+                  {
+                    name:this.linea.izq.VARIABLE
+                  }
+                ]
+              }
+            ]
+          },
+          // fin izquierdo
+          // igual
+          {
+            name:this.linea.igual 
+          }, 
+          {
+            name:"Derecho",
+            children:[
+              {
+                name:"NUMERO",
+                children:[
+                  {
+                    name:this.linea.der["0"].NUMERO
+                  }
+                ]
+              }
+            ]
+
+          }
+        ]
+
+      }
+    }
   }
   
   class LineaExpresion extends Linea {
@@ -63,11 +109,22 @@ class Linea {
     }
   
     colorear(){
+      var izqvariable = this.linea.op_izquierdo["0"].VARIABLE
+      var izqnumero = this.linea.op_izquierdo["0"].NUMERO
+      var dervariable = this.linea.op_derecho["0"].VARIABLE
+      var dernumero = this.linea.op_derecho["0"].NUMERO
       return "{0} {1} {2}\n".format(
-        this.spanner(this.colores[0], this.linea.op_izquierdo["0"].VARIABLE),
+        this.spanner(this.colores[0], (izqvariable)?izqvariable:izqnumero),
         this.spanner(this.colores[1], this.linea.operador["0"]), 
-        this.spanner(this.colores[0], this.linea.op_derecho["0"].NUMERO))  
+        this.spanner(this.colores[0], (dervariable)?dervariable:dernumero))  
     }
+
+    get grafico(){
+      return {
+        
+      }
+    }
+
   }
   
   class LineaWhile extends Linea {

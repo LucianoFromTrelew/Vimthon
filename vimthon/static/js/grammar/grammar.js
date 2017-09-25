@@ -57,11 +57,22 @@ function id(x) {return x[0]; }
         }
     };
 
+    const bucleFor = (data, index, reject) => { 
+        return {
+            for:data[0],
+            variable:data[2],
+            in:data[4],
+            iterable:data[6],
+            dospuntos:data[8]
+        }
+    };
+
     const expresion = (data, index, reject) => { 
         return {
             expresion:data[0]
         }
     };
+
 var grammar = {
     Lexer: undefined,
     ParserRules: [
@@ -79,8 +90,12 @@ var grammar = {
     {"name": "sentencia", "symbols": ["asignacion"]},
     {"name": "sentencia", "symbols": ["expresion"]},
     {"name": "sentencia", "symbols": ["bucle"]},
+    {"name": "sentencia", "symbols": ["for"]},
     {"name": "bucle$string$1", "symbols": [{"literal":"w"}, {"literal":"h"}, {"literal":"i"}, {"literal":"l"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "bucle", "symbols": ["bucle$string$1", "ESPACIO", "expresion", "ESPACIO", {"literal":":"}], "postprocess": bucle},
+    {"name": "for$string$1", "symbols": [{"literal":"f"}, {"literal":"o"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "for$string$2", "symbols": [{"literal":"i"}, {"literal":"n"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "for", "symbols": ["for$string$1", "ESPACIO", "VARIABLE", "ESPACIO", "for$string$2", "ESPACIO", "VARIABLE", "ESPACIO", {"literal":":"}], "postprocess": bucleFor},
     {"name": "asignacion", "symbols": ["VARIABLE", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
     {"name": "expresion", "symbols": ["operacion"], "postprocess": operacion},
     {"name": "expresion", "symbols": ["NUMERO"]},
