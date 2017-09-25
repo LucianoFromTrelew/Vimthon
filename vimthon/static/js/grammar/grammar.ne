@@ -81,7 +81,7 @@ sentencia -> asignacion
     | expresion 
     | bucle
 
-bucle -> "while" ESPACIO expresion ":" {% bucle %}
+bucle -> "while" ESPACIO expresion ESPACIO ":" {% bucle %}
 
 asignacion -> VARIABLE ESPACIO "=" ESPACIO expresion {% asignacion %}
 

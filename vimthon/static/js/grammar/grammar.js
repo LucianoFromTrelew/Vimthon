@@ -80,7 +80,7 @@ var grammar = {
     {"name": "sentencia", "symbols": ["expresion"]},
     {"name": "sentencia", "symbols": ["bucle"]},
     {"name": "bucle$string$1", "symbols": [{"literal":"w"}, {"literal":"h"}, {"literal":"i"}, {"literal":"l"}, {"literal":"e"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "bucle", "symbols": ["bucle$string$1", "ESPACIO", "expresion", {"literal":":"}], "postprocess": bucle},
+    {"name": "bucle", "symbols": ["bucle$string$1", "ESPACIO", "expresion", "ESPACIO", {"literal":":"}], "postprocess": bucle},
     {"name": "asignacion", "symbols": ["VARIABLE", "ESPACIO", {"literal":"="}, "ESPACIO", "expresion"], "postprocess": asignacion},
     {"name": "expresion", "symbols": ["operacion"], "postprocess": operacion},
     {"name": "expresion", "symbols": ["NUMERO"]},

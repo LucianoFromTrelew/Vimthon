@@ -24,7 +24,7 @@ Chart: 0
 19: {expresion →  ● operacion}, from: 0
 20: {expresion →  ● NUMERO}, from: 0
 21: {expresion →  ● VARIABLE}, from: 0
-22: {bucle →  ● bucle$string$1 ESPACIO expresion ":"}, from: 0
+22: {bucle →  ● bucle$string$1 ESPACIO expresion ESPACIO ":"}, from: 0
 23: {VARIABLE →  ● /[_a-zA-Z]/ VARIABLE$ebnf$1}, from: 0
 24: {operacion →  ● aritmetica}, from: 0
 25: {operacion →  ● booleana}, from: 0
