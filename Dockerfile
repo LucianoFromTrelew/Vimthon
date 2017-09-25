@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 RUN git clone https://github.com/LucianoFromTrelew/Vimthon.git
-WORKDIR Vimthon/
-RUN git checkout flask
+WORKDIR Vimthon
 EXPOSE 5000
 CMD ["python", "run.py"]
