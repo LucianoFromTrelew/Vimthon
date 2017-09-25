@@ -53,7 +53,6 @@ class Linea {
       this.spanner(this.colores[0], this.linea.izq.VARIABLE),
       this.linea.igual, 
       this.spanner(this.colores[1], this.linea.der["0"].NUMERO))
-  
     }
   }
   
@@ -65,7 +64,7 @@ class Linea {
     }
   
     colorear(){
-      return "{0} {1} {2}".format(
+      return "{0} {1} {2}\n".format(
         this.spanner(this.colores[0], this.linea.op_izquierdo["0"].VARIABLE),
         this.spanner(this.colores[1], this.linea.operador["0"]), 
         this.spanner(this.colores[0], this.linea.op_derecho["0"].NUMERO))  
@@ -82,7 +81,7 @@ class Linea {
     colorear(){
       return "{0} {1}{2}\n".format(
         this.spanner(this.colores[0], this.linea.while),
-        new LineaExpresion(this.linea.condicion).colorear(),
+        new LineaExpresion(this.linea.condicion).colorear().replace(/\n/g, ""),
         this.spanner(this.colores[1], this.linea.dospuntos)
       )
     }
