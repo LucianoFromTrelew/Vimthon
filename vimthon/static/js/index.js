@@ -1,6 +1,6 @@
 // Document ready stuff
 const codigo = '#editor'
-
+var change = 0
 $(document).ready(function(){
     // cuando submiteo el form
     $('#text_form').submit(function(event){
@@ -36,24 +36,29 @@ function update() {
     var cuerpo = p.results[0].cuerpo
   } catch (error){}
   
-  
-  for (var l in cuerpo) {
-    try {
-      var linea = cuerpo[l].linea
+  if (change == 0) {
+    $('#code_editor').html('')
+    for (var l in cuerpo) {
+      try {
+        var linea = cuerpo[l].linea
+        
+        //recuperamos el html del code_editor
+        texto = $("#code_editor").html()
+
+        //le seteamos el nuevo texto al code_editor,
+        //que va a ser lo que ya tenia, mas lo nuevo coloreado
+        $("#code_editor")
+        .html(texto.concat(LineaFactory
+        .crear_linea(linea).colorear()))
       
-      //recuperamos el html del code_editor
-      texto = $("#code_editor").html()
+      } catch (error) {
+        continue
+      }
+    } 
 
-      //le seteamos el nuevo texto al code_editor,
-      //que va a ser lo que ya tenia, mas lo nuevo coloreado
-      $("#code_editor")
-      .html(texto.concat(LineaFactory
-      .crear_linea(linea).colorear()))
-    
-    } catch (error) {
-      continue
-    }
-
+    change = 1
+  } else {
+    change = 0
   }
 } 
 
