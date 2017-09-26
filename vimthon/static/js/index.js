@@ -18,8 +18,10 @@ $(document).ready(function(){
     });
 
     $(codigo).bind('DOMSubtreeModified', update);
+    $('#graficarBtn').on('click',graficar_derivacion)
 });
 
+var arbol
 function update() {
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
   var texto = $(codigo).html().replace(/<br>/g,'')
@@ -37,6 +39,7 @@ function update() {
   
   if (change == 0) {
     $('#code_editor').html('')
+    arbol = new Arbol()
     for (var l in cuerpo) {
       try {
         var linea = LineaFactory.crear_linea(cuerpo[l].linea)
@@ -50,10 +53,9 @@ function update() {
         $("#code_editor")
         .html(texto.concat(linea.colorear()))
 
-        var arbol = new Arbol()
+        
         arbol.addNodo(linea.grafico)
 
-        arbol.dibujar()
       
       } catch (error) {
         // console.log("PINCHOSE: {0}".format(error.message))
@@ -65,4 +67,8 @@ function update() {
   } else {
     change = 0
   }
+}
+
+function graficar_derivacion(){
+  arbol.dibujar()
 }

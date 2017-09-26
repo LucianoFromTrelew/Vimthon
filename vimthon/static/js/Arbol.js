@@ -1,4 +1,4 @@
-var cuerpo =[
+const cuerpo =[
     {
       name: "cuerpo",                         // The name of the node
       class: "node",                          // The CSS class of the node
@@ -39,6 +39,7 @@ class Arbol {
     constructor(){
       this._cuerpo = cuerpo
       this._opciones = opciones
+      this._cuerpo[0].children= []
     }
 
     addNodo(nodo){
