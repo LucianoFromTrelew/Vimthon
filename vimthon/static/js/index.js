@@ -23,6 +23,7 @@ $(document).ready(function(){
 
 var arbol
 function update() {
+  $("#error").html("")
   var p = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
   var texto = $(codigo).html().replace(/<br>/g,'')
   .replace(/<div>/g,'\n').replace(/<\/div>/g, '')
@@ -70,5 +71,10 @@ function update() {
 }
 
 function graficar_derivacion(){
-  arbol.dibujar()
+  
+  try {
+    arbol.dibujar()
+  } catch (error) {
+    $("#error").html("Nada para graficar")    
+  }
 }

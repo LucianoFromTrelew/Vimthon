@@ -20,3 +20,8 @@
     border-width: 7px;
     border-style: hidden;
 }
+
+#error {
+    color:  red;
+    font-weight: bold;
+}
