@@ -59,7 +59,7 @@ class Linea {
       return this.linea.igual
     }
 
-    get asingacion(){
+    get asignacion(){
       return this.linea.der["0"].NUMERO
     }
   
@@ -67,48 +67,52 @@ class Linea {
       return "{0} {1} {2}\n".format(
       this.spanner(this.colores[0], this.variable),
       this.igual, 
-      this.spanner(this.colores[1], this.asingacion))
+      this.spanner(this.colores[1], this.asignacion))
     }
 
     get grafico(){
-      return {
-        name:"Asignación",
+      
+      return{ 
+        name: "linea",
         children:[
-          // izquierdo
           {
-            name:"Izquierdo",
+            name:"Asignación",
             children:[
+              // izquierdo
               {
-                name:"VARIABLE",
+                name:"Izquierdo",
                 children:[
                   {
-                    name:this.variable
+                    name:"VARIABLE",
+                    children:[
+                      {
+                        name: this.variable
+                      }
+                    ]
+                  }
+                ]
+              },
+              // fin izquierdo
+              // igual
+              {
+                name:this.igual
+              }, 
+              {
+                name:"Derecho",
+                children:[
+                  {
+                    name:"NUMERO",
+                    children:[
+                      {
+                        name:this.asignacion
+                      }
+                    ]
                   }
                 ]
               }
             ]
-          },
-          // fin izquierdo
-          // igual
-          {
-            name:this.igual 
-          }, 
-          {
-            name:"Derecho",
-            children:[
-              {
-                name:"NUMERO",
-                children:[
-                  {
-                    name:this.asingacion
-                  }
-                ]
-              }
-            ]
-
           }
         ]
-
       }
     }
   }
@@ -138,34 +142,42 @@ class Linea {
       return "{0} {1} {2}\n".format(
         this.spanner(this.colores[0], this.op_izquierdo),
         this.spanner(this.colores[1], this.operador), 
-        this.spanner(this.colores[0], this.op_derecho)  
+        this.spanner(this.colores[0], this.op_derecho))  
     }
 
     get grafico(){
-      return {
-        name: "Expresión",
+      return{
+        name:"linea",
         children: [
+          
           {
-            name: "op_izquierdo",
-            children:[
-              {
-                name: this.op_izquierdo
-              }
-            ]
-          },
-          {
-            name: this.operador
-          },
-          {
-            name: "op_derecho",
+            name: "Expresión",
             children: [
               {
-                name: this.op_derecho
+                name: "op_izquierdo",
+                children:[
+                  {
+                    name: this.op_izquierdo
+                  }
+                ]
+              },
+              {
+                name: this.operador
+              },
+              {
+                name: "op_derecho",
+                children: [
+                  {
+                    name: this.op_derecho
+                  }
+                ]
               }
             ]
           }
+
         ]
-      }
+      } 
+          
     }
 
   }
@@ -199,28 +211,94 @@ class Linea {
 
     get grafico(){
       return{
-        name:"While",
-        children:[
+        name:"linea",
+        children: [
+          
           {
-            name:this.while
-          },
-          {
-            name:"Condición",
-            children: this.condicion.grafico()
-          },
-          {
-            name:this.dospuntos
-          },
-        ]
+            name:"While",
+            children:[
+              {
+                name:this.while
+              },
+              {
+                name:"Condición",
+                children: this.condicion.grafico.children
+              },
+              {
+                name:this.dospuntos
+              },
+            ]
+          }
+
+        ]    
       }
     }
   
   }
+
+  class LineaFor extends Linea{
+    
+    constructor(linea){
+      var colores = ["blue", "red", "green"]
+      super(colores, linea)
+    }
+
+    get for(){
+      return this.linea.for
+    }
+    get in(){
+      return this.linea.in
+    }
+    get dospuntos(){
+      return this.linea.dospuntos
+    }
+
+    get iterable(){
+      return this.linea.iterable.VARIABLE
+    }
+
+    get variable(){
+      return this.linea.variable.VARIABLE
+    }
+
+    colorear(){
+      return "{0} {1} {2} {3}{4}\n".format(
+        this.spanner(this.colores[0], this.for),
+        this.spanner(this.colores[1], this.variable),
+        this.in,
+        this.spanner(this.colores[2], this.iterable),
+        this.spanner(this.colores[1], this.dospuntos)
+      )
+    }
+
+    get grafico(){
+
+      return{
+        name: "linea",
+        children:[
+          {
+            name: this.for
+          },
+          {
+            name: this.variable
+          },
+          {
+            name: this.in
+          },
+          {
+            name: this.iterable
+          },
+          {
+            name: this.dospuntos
+          },
+        ]
+      }
+    }
+
+  }
   class LineaFactory {
    
     static crear_linea(linea){
-      
-      // const tipos_linea = ["operador", "while", "igual"]
       
       var claves_linea = Object.keys(linea)
   
@@ -245,6 +323,8 @@ class Linea {
         return new LineaExpresion(linea)
       }else if (/while/i.test(claves_linea)){
         return new LineaWhile(linea)
+      }else if (/for/i.test(claves_linea)){
+        return new LineaFor(linea)
       }else{
         return new LineaAsignacion(linea)
       }

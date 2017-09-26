@@ -14,3 +14,9 @@
 .nodeText{
     font: 10px sans-serif;
 }
+
+#graph {
+    border-color: #ff9400;
+    border-width: 7px;
+    border-style: hidden;
+}
