@@ -50,12 +50,24 @@ class Linea {
       var colores = ["red", "blue"]
       super(colores, linea)
     }
+
+    get variable(){
+      return this.linea.izq.VARIABLE
+    }
+
+    get igual(){
+      return this.linea.igual
+    }
+
+    get asingacion(){
+      return this.linea.der["0"].NUMERO
+    }
   
     colorear(){
       return "{0} {1} {2}\n".format(
-      this.spanner(this.colores[0], this.linea.izq.VARIABLE),
-      this.linea.igual, 
-      this.spanner(this.colores[1], this.linea.der["0"].NUMERO))
+      this.spanner(this.colores[0], this.variable),
+      this.igual, 
+      this.spanner(this.colores[1], this.asingacion))
     }
 
     get grafico(){
@@ -70,7 +82,7 @@ class Linea {
                 name:"VARIABLE",
                 children:[
                   {
-                    name:this.linea.izq.VARIABLE
+                    name:this.variable
                   }
                 ]
               }
@@ -79,7 +91,7 @@ class Linea {
           // fin izquierdo
           // igual
           {
-            name:this.linea.igual 
+            name:this.igual 
           }, 
           {
             name:"Derecho",
@@ -88,7 +100,7 @@ class Linea {
                 name:"NUMERO",
                 children:[
                   {
-                    name:this.linea.der["0"].NUMERO
+                    name:this.asingacion
                   }
                 ]
               }
@@ -108,20 +120,51 @@ class Linea {
       super(colores, linea)
     }
   
+    get op_izquierdo(){
+      return this.linea.op_izquierdo["0"].VARIABLE ?
+      this.linea.op_izquierdo["0"].VARIABLE :
+      this.linea.op_izquierdo["0"].NUMERO
+    }
+
+    get operador(){
+      return this.linea.operador["0"]
+    }
+    get op_derecho(){
+      return this.linea.op_derecho["0"].VARIABLE ?
+      this.linea.op_derecho["0"].VARIABLE :
+      this.linea.op_derecho["0"].NUMERO      
+    }
     colorear(){
-      var izqvariable = this.linea.op_izquierdo["0"].VARIABLE
-      var izqnumero = this.linea.op_izquierdo["0"].NUMERO
-      var dervariable = this.linea.op_derecho["0"].VARIABLE
-      var dernumero = this.linea.op_derecho["0"].NUMERO
       return "{0} {1} {2}\n".format(
-        this.spanner(this.colores[0], (izqvariable)?izqvariable:izqnumero),
-        this.spanner(this.colores[1], this.linea.operador["0"]), 
-        this.spanner(this.colores[0], (dervariable)?dervariable:dernumero))  
+        this.spanner(this.colores[0], this.op_izquierdo),
+        this.spanner(this.colores[1], this.operador), 
+        this.spanner(this.colores[0], this.op_derecho)  
     }
 
     get grafico(){
       return {
-        
+        name: "Expresión",
+        children: [
+          {
+            name: "op_izquierdo",
+            children:[
+              {
+                name: this.op_izquierdo
+              }
+            ]
+          },
+          {
+            name: this.operador
+          },
+          {
+            name: "op_derecho",
+            children: [
+              {
+                name: this.op_derecho
+              }
+            ]
+          }
+        ]
       }
     }
 
@@ -133,13 +176,43 @@ class Linea {
       var colores = ["blue", "red"]
       super(colores, linea)
     }
+
+    get while(){
+      return this.linea.while
+    }
+
+    get condicion(){
+      return new LineaExpresion(this.linea.condicion)
+    }
   
+    get dospuntos(){
+      return this.linea.dospuntos
+    }
+
     colorear(){
       return "{0} {1}{2}\n".format(
-        this.spanner(this.colores[0], this.linea.while),
-        new LineaExpresion(this.linea.condicion).colorear().replace(/\n/g, ""),
-        this.spanner(this.colores[1], this.linea.dospuntos)
+        this.spanner(this.colores[0], this.while),
+        this.condicion.colorear().replace(/\n/g, ""),
+        this.spanner(this.colores[1], this.dospuntos)
       )
+    }
+
+    get grafico(){
+      return{
+        name:"While",
+        children:[
+          {
+            name:this.while
+          },
+          {
+            name:"Condición",
+            children: this.condicion.grafico()
+          },
+          {
+            name:this.dospuntos
+          },
+        ]
+      }
     }
   
   }
@@ -147,7 +220,7 @@ class Linea {
    
     static crear_linea(linea){
       
-      const tipos_linea = ["operador", "while", "igual"]
+      // const tipos_linea = ["operador", "while", "igual"]
       
       var claves_linea = Object.keys(linea)
   
